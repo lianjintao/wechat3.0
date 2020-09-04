@@ -1,4 +1,4 @@
-/**index.wxss**/
+/* miniprogram/pages/chooseProjectAndNum/chooseProjectAndNum.wxss */
 
 .container {
   position: relative;
@@ -99,4 +99,3 @@
   top: 190px;
   right: 30px;
 }
-

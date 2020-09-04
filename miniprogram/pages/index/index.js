@@ -2,6 +2,16 @@
 const app = getApp()
 
 Page({
+
+  onClickXitilianxi: function() {
+    /**wx.navigateTo({
+      url: '../../pages/databaseGuide/databaseGuide'
+    })**/
+    wx.navigateTo({
+      url: '../xitilianxiCategory/xitilianxiCategory',
+    })
+  },
+
   data: {
     avatarUrl: './user-unlogin.png',
     userInfo: {},

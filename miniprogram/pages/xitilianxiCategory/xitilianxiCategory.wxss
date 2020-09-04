@@ -1,6 +1,4 @@
-/* pages/databaseGuide/databaseGuide.wxss */
-
-@import "../../style/guide.wxss";
+/* miniprogram/pages/xitilianxiCategory.wxss */
 
 .counter {
   margin-top: 50rpx;

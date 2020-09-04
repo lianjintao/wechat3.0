@@ -1,26 +1,45 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/userConsole/userConsole",
-    "pages/storageConsole/storageConsole",
-    "pages/databaseGuide/databaseGuide",
-    "pages/addFunction/addFunction",
-    "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
-    "pages/openapi/openapi",
-    "pages/openapi/serverapi/serverapi",
-    "pages/openapi/callback/callback",
-    "pages/openapi/cloudid/cloudid",
-    "pages/im/im",
-    "pages/im/room/room"
+    "pages/userConsole/userConsole",
+    "pages/databaseGuide/databaseGuide",
+    "pages/xitilianxiCategory/xitilianxiCategory",
+    "pages/chooseProjectAndNum/chooseProjectAndNum",
+    "pages/picker/picker"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTitleText": "司法考试刷题",
     "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap.json",
-  "style": "v2"
+  "tabBar": {
+    "color": "#ccc",
+    "selectedColor": "#35495e",
+    "borderStyle": "white",
+    "backgroundColor": "#f9f9f9",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "images/list.png",
+        "selectedIconPath": "images/code-cloud-callback-config.png"
+      },
+      {
+        "text": "目录",
+        "pagePath": "pages/userConsole/userConsole",
+        "iconPath": "images/code-cloud-callback-config.png",
+        "selectedIconPath": "images/code-cloud-callback-config.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/databaseGuide/databaseGuide",
+        "iconPath": "images/me.png",
+        "selectedIconPath": "images/code-cloud-callback-config.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap72.json"
 }

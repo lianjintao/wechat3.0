@@ -1,4 +1,4 @@
-<!--index.wxml-->
+<!--miniprogram/pages/chooseProjectAndNum/chooseProjectAndNum.wxml-->
 <view class="container">
 
 <button class="xitilianxi_button" bindtap="onClickXitilianxi" mode="widthFix"></button>
