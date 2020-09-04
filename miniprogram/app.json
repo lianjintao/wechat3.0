@@ -5,8 +5,7 @@
     "pages/userConsole/userConsole",
     "pages/databaseGuide/databaseGuide",
     "pages/xitilianxiCategory/xitilianxiCategory",
-    "pages/chooseProjectAndNum/chooseProjectAndNum",
-    "pages/picker/picker"
+    "pages/chooseProjectAndNum/chooseProjectAndNum"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

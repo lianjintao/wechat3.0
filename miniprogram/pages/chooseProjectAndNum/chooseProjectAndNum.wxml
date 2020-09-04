@@ -1,20 +1,45 @@
 <!--miniprogram/pages/chooseProjectAndNum/chooseProjectAndNum.wxml-->
 <view class="container">
 
-<button class="xitilianxi_button" bindtap="onClickXitilianxi" mode="widthFix"></button>
-<image class="xitilianxi_icon" mode="widthFix" src="../../images/xitilianxi.png"></image>
-<view class="xitilianxi_title">习题练习</view>
+  <view class="tixi_text" mode="widthFix">题型</view>
+  <button class="tixi_button" bindtap="onClickTixiPicker" mode="widthFix"><view>{{picker_tixi_data}}</view></button>
 
-<button class="monilianxi_button" mode="widthFix">.</button>
-<image class="monilianxi_icon" mode="widthFix" src="../../images/monilianxi.png"></image>
-<view class="monilianxi_title">模拟练习</view>
+  <view class="tishu_text" mode="widthFix">题数</view>
+  <button class="tishu_button" bindtap="onClickTishuPicker" mode="widthFix">{{picker_tishu_data}}</button>
 
-<button class="cuotiben_button" mode="widthFix">.</button>
-<image class="cuotiben_icon" mode="widthFix" src="../../images/cuotiben.png"></image>
-<view class="cuotiben_title">错题本</view>
 
-<button class="nanti_button" mode="widthFix">.</button>
-<image class="nanti_icon" mode="widthFix" src="../../images/nanti.png"></image>
-<view class="nanti_title">难题本</view>
-
+  <view class="nandu_text" mode="widthFix">难度</view>
+  <button class="nandu_button" bindtap="onClickNanduPicker" mode="widthFix">{{picker_nandu_data}}</button>
 </view>
+
+<button class="startDati" mode="widthFix">开始答题</button>
+
+<picker 
+	isShowPicker="{{isShow_tixi}}"
+	bindsure="sureCallBack_tixi"
+	bindcancle="cancleCallBack_tixi"
+  scrollType="normal"
+  titleText="选择题型"
+	listData="{{listData_tixi}}"
+	indicatorStyle="height:47px"
+></picker>
+
+<picker
+	isShowPicker="{{isShow_tishu}}"
+	bindsure="sureCallBack_tishu"
+	bindcancle="cancleCallBack_tishu"
+  scrollType="normal"
+  titleText="选择题数"
+	listData="{{listData_tishu}}"
+	indicatorStyle="height:47px"
+></picker>
+
+<picker
+	isShowPicker="{{isShow_nandu}}"
+	bindsure="sureCallBack_nandu"
+	bindcancle="cancleCallBack_nandu"
+  scrollType="normal"
+  titleText="选择难度"
+	listData="{{listData_nandu}}"
+	indicatorStyle="height:47px"
+></picker>

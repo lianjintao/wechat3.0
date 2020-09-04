@@ -70,3 +70,9 @@
 .picker-content {
 	flex-grow: 1;
 }
+.line1{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	lines:1
+}

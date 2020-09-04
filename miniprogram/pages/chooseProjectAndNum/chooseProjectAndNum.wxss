@@ -1,101 +1,62 @@
 /* miniprogram/pages/chooseProjectAndNum/chooseProjectAndNum.wxss */
-
 .container {
   position: relative;
 }
 
-.xitilianxi_icon {
+.tixi_text {
   width: 80px;
   position: absolute;
+  left: 50px;
   top: 50px;
-  left: 50px;
 }
 
-.xitilianxi_title {
-  position: absolute;
-  top: 135px;
-  width: 80px;
-  left: 50px;
-  text-align: center;
-}
-
-.xitilianxi_button {
-  background-color: gray;
+.tixi_button {
   width: 120px;
-  height: 120px;
+  height: 44px;
+  background-color: grey;
   position: absolute;
-  top: 40px;
-  left: 30px;
+  left: 100px;
+  top: 39px;
 }
 
-.monilianxi_icon {
+.tishu_text {
   width: 80px;
   position: absolute;
-  top: 50px;
-  right: 50px;
-}
-
-.monilianxi_title {
-  position: absolute;
-  top: 135px;
-  width: 80px;
-  right: 50px;
-  text-align: center;
-}
-
-.monilianxi_button {
-  background-color: gray;
-  width: 120px;
-  height: 120px;
-  position: absolute;
-  top: 40px;
-  right: 30px;
-}
-
-.cuotiben_icon {
-  width: 80px;
-  position: absolute;
-  top: 200px;
   left: 50px;
+  top: 100px;
 }
 
-.cuotiben_title {
+.tishu_button {
+  width: 120px;
+  height: 44px;
+  background-color: grey;
   position: absolute;
-  top: 285px;
+  left: 100px;
+  top: 89px;
+}
+
+.nandu_text {
   width: 80px;
+  position: absolute;
   left: 50px;
-  text-align: center;
+  top: 150px;
 }
 
-.cuotiben_button {
-  background-color: gray;
+.nandu_button {
   width: 120px;
-  height: 120px;
+  height: 44px;
+  background-color: grey;
   position: absolute;
-  top: 190px;
-  left: 30px;
+  left: 100px;
+  top: 139px;
 }
 
-.nanti_icon {
-  width: 80px;
-  position: absolute;
-  top: 200px;
-  right: 50px;
-}
-
-.nanti_title {
-  position: absolute;
-  top: 285px;
-  width: 80px;
-  right: 50px;
-  text-align: center;
-}
-
-.nanti_button {
-  background-color: gray;
+.startDati {
   width: 120px;
-  height: 120px;
+  height: 44px;
+  background-color: grey;
   position: absolute;
-  top: 190px;
-  right: 30px;
+  bottom: 100px;
+  left: 100px;
 }
+

@@ -45,26 +45,31 @@ Page({
         }],
 
         isShow_03: false,
-        listData_03:[['男', '女'],['已婚','未婚'],['在职','离职']],
+        listData_03:[['单选题', '多选题', '不定向选择题', '主观题'],['5','10', '15', '20', '25', '30'],['1','2','3','4','5']],
         picker_03_data:[],
   },
 
   click: function() {
-
-    /** 
     wx.navigateTo({
       url: '../chooseProjectAndNum/chooseProjectAndNum',
-    }) **/
+    }) 
   },
 
     showPicker_03: function () {
       wx.showToast({
         title: '发送成功，请返回微信主界面查看',
       })
-      
-    this.setData({
+
+    
+    wx.navigateTo({
+      url: '../chooseProjectAndNum/chooseProjectAndNum',
+    }) 
+      /** 
+       *     this.setData({
       isShow_03: true
     })
+      */
+
   },
   sureCallBack_03 (e) {
     let data = e.detail

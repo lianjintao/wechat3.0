@@ -5,62 +5,76 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isShow_tixi: false,
+    listData_tixi:[['单选题', '多选题', '不定项选择题', '主观题']],
+    picker_tixi_data:[],
 
+    isShow_tishu: false,
+    listData_tishu:[['5', '10', '15', '20', '25', '30']],
+    picker_tishu_data:[],
+
+    isShow_nandu: false,
+    listData_nandu:[['⭐️ ☆  ☆  ☆  ☆', '⭐️ ⭐️ ☆  ☆  ☆', '⭐️ ⭐️ ⭐️ ☆  ☆','⭐️ ⭐️ ⭐️ ⭐️ ☆','⭐️ ⭐️ ⭐️ ⭐️ ⭐️']],
+    picker_nandu_data:[],
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  onClickTixiPicker: function() {
+    this.setData({
+      isShow_tixi: true
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  sureCallBack_tixi (e) {
+    let data = e.detail
+    this.setData({
+      isShow_tixi: false,
+      picker_tixi_data: e.detail.choosedData,
+      picker_tixi_index:JSON.stringify(e.detail.choosedIndexArr)
+    })
+  },
+  cancleCallBack_tixi () {
+    this.setData({
+      isShow_tixi: false,
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  onClickTishuPicker: function() {
+    this.setData({
+      isShow_tishu: true
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  sureCallBack_tishu (e) {
+    let data = e.detail
+    this.setData({
+      isShow_tishu: false,
+      picker_tishu_data: e.detail.choosedData,
+      picker_tishu_index:JSON.stringify(e.detail.choosedIndexArr)
+    })
+  },
+  cancleCallBack_tishu () {
+    this.setData({
+      isShow_tishu: false,
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  onClickNanduPicker: function() {
+    this.setData({
+      isShow_nandu: true
+    })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  sureCallBack_nandu (e) {
+    let data = e.detail
+    this.setData({
+      isShow_nandu: false,
+      picker_nandu_data: e.detail.choosedData,
+      picker_nandu_index:JSON.stringify(e.detail.choosedIndexArr)
+    })
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  cancleCallBack_nandu () {
+    this.setData({
+      isShow_nandu: false,
+    })
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
