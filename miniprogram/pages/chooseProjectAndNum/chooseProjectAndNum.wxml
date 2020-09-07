@@ -12,7 +12,7 @@
   <button class="nandu_button" bindtap="onClickNanduPicker" mode="widthFix">{{picker_nandu_data}}</button>
 </view>
 
-<button class="startDati" mode="widthFix">开始答题</button>
+<button class="startDati" bindtap="onClickStartDati" mode="widthFix">{{result}}</button>
 
 <picker 
 	isShowPicker="{{isShow_tixi}}"

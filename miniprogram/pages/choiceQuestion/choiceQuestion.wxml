@@ -1,0 +1,22 @@
+<!--miniprogram/pages/choiceQuestion/choiceQuestion.wxml-->
+
+<view class="modals">
+    <view class="content bottom-pos" animation="{{animationData}}">布局内容</view>
+</view>
+
+<view class="container">
+  <view>我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目</view>
+
+
+<view class='selection'>
+  <view class='{{view1}}' bindtap='view1Click' id='1'>a</view>
+  <view class='{{view2}}' bindtap='view2Click' id='2'>b</view>
+  <view class='{{view3}}' bindtap='view3Click' id='3'>c</view>
+  <view class='{{view4}}' bindtap='view4Click' id='4'>d</view>
+</view>
+
+<view class="options" mode="widthFix">
+  <button class="submitAnswer" bindtap="submitAnswer">提交答案</button>
+  <button class="nextProject" bindtap="nextProject">下一题</button>
+</view>
+</view>

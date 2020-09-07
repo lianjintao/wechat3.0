@@ -1,0 +1,110 @@
+/* miniprogram/pages/choiceQuestion/choiceQuestion.wxss */
+
+.container {
+    position: absolute;
+}
+
+.selection1{
+  width: 400rpx;
+  height: 150rpx;
+  background-color: grey;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  }
+  .selection2{
+  width: 400rpx;
+  height: 150rpx;
+  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  }
+  .selection3{
+  width: 400rpx;
+  height: 150rpx;
+  background-color: red;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  }
+  .selection{
+  width: 750rpx;
+  height: 800rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  }
+
+  .answer_bar {
+    margin-top: 60px;
+    position: relative;
+    width: 100%;
+  }
+
+  .your_answer_title {
+    position: absolute;
+    left: 20px;
+  }
+
+  .your_answer_choice {
+    position: absolute;
+    left: 90px;
+  }
+  
+  .answer_title {
+    position: absolute;
+    left: 120px;
+  }
+
+  .answer_choice {
+    position: absolute;
+    left: 190px;
+  }
+
+  .options {
+    position: relative;
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .submitAnswer {
+    left: 0px;
+    position: absolute;
+    width: 45%;
+    background-color: indianred;
+    text-align: center;
+    z-index: 1002;
+  }
+
+  .nextProject {
+    right: 0px;
+    position: absolute;
+    background-color: indianred;
+    width: 45%;
+    text-align: center;
+  }
+  
+  .content {
+    position: absolute;
+    z-index: 1001;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30rpx;
+    height: 300rpx;
+    background-color: #fff;
+  }
+   
+  /*动画前初始位置*/
+   
+  .bottom-pos {
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+  }
+

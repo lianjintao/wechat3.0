@@ -3,11 +3,13 @@
 
 <button class="xitilianxi_button" bindtap="onClickXitilianxi" mode="widthFix"></button>
 <image class="xitilianxi_icon" mode="widthFix" src="../../images/xitilianxi.png"></image>
-<view class="xitilianxi_title">习题练习</view>
+<view class="xitilianxi_title">顺序练习</view>
+/**无脑循环、一道一道给答案**/
 
 <button class="monilianxi_button" mode="widthFix">.</button>
 <image class="monilianxi_icon" mode="widthFix" src="../../images/monilianxi.png"></image>
 <view class="monilianxi_title">模拟练习</view>
+/**主观题和客观题**/
 
 <button class="cuotiben_button" mode="widthFix">.</button>
 <image class="cuotiben_icon" mode="widthFix" src="../../images/cuotiben.png"></image>
@@ -15,6 +17,7 @@
 
 <button class="nanti_button" mode="widthFix">.</button>
 <image class="nanti_icon" mode="widthFix" src="../../images/nanti.png"></image>
-<view class="nanti_title">难题本</view>
+<view class="nanti_title">分类练习</view> 
+//难度、题型、分类、题数、一套做完给答案
 
 </view>
