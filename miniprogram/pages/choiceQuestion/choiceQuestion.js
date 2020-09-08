@@ -9,14 +9,138 @@ Page({
     animationData: {}, //内容动画
     animationMask: {}, //蒙板动画
 
-    view1: 'selection1',
-    view2: 'selection1',
-    view3: 'selection1',
-    view4: 'selection1',
-    // 默认答案为2，后台会给的
-    key: 2,
-    // 选项是否被点击
-    isSelect: false
+    title:'',
+    type:0,
+    typeStr:'',
+    options:[],
+    answer:'Z',
+    difficulty:0,
+    difficultyStr:'',
+    analysis:'',
+
+    singleItems: [],
+    mutliItems:[],
+    focus: false,
+    line:'0em',
+    datiTitle:'',
+    datiBackGroundColor:'#ff0000'
+  },
+
+  getDataFromApi: function() {
+    var app = getApp();
+    var currentIndex = app.globalData.currentIndex;
+    console.log(currentIndex);
+    wx.cloud.callFunction({
+      name: 'get_ques_info',
+      data: {
+        question_id:currentIndex
+      },
+      success: res => {
+        console.log(res)
+
+        this.setData({
+          type:res.result.type,
+          title:res.result.title,
+          options:res.result.options, 
+        })
+
+        var optionA = {};
+        optionA.name='A';
+        var titleA = this.data.options[0];
+        optionA.value= titleA;
+
+        var optionB = {};
+        optionB.name='B';
+        optionB.value=this.data.options[1];
+
+        var optionC = {};
+        optionC.name='C';
+        optionC.value=this.data.options[2];
+
+        var optionD = {};
+        optionD.name='D';
+        optionD.value=this.data.options[3];
+
+        let itemss=[];
+        itemss.push(optionA);
+        itemss.push(optionB);
+        itemss.push(optionC);
+        itemss.push(optionD);
+        console.log(itemss);
+
+        var type = res.result.type;
+        if (type == 1) {
+          this.setData({
+            singleItems:itemss,
+            mutliItems:[],
+            line:'0em',
+            datiTitle:'',
+            datiBackGroundColor:'#FFFFFF'
+          })
+        } else if (type == 2 || type == 3) {
+          this.setData({
+            mutliItems:itemss,
+            singleItems:[],
+            line:'0em',
+            datiTitle:'',
+            datiBackGroundColor:'#FFFFFF'
+          })
+        } else {
+          this.setData({
+            mutliItems:[],
+            singleItems:[],
+            line:'10em',
+            datiTitle:'请在输入框内输入你的答案',
+            datiBackGroundColor:'#FF0000'
+          })
+        }
+        var typeStr1 = '';
+        if (type == 1) {
+          typeStr1 = '单选题';
+          //进行UI布局的改变
+        } else if (type == 2 || type == 3) {
+          typeStr1 = '多选题';
+        } else if (type == 3) {
+          typeStr1 = '不定向';
+        } else if (type == 4) {
+          typeStr1 = '主观题';
+        }
+        this.setData({
+          typeStr:typeStr1
+        })
+        var diff = res.result.difficulty;
+        var diffStr1 = '';
+        if (diff == 1) {
+          diffStr1 = '入门';
+        } else if (diff == 2) {
+          diffStr1 = '简单';
+        } else if (diff == 3) {
+          diffStr1 = '普通';
+        } else if (diff == 4) {
+          diffStr1 = '较难';
+        } else {
+          diffStr1 = '困难';
+        }
+        this.setData({
+          difficultyStr:diffStr1
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '调用失败',
+        })
+        console.error('[云函数] [sum] 调用失败：', err)
+      }
+    })
+  },
+
+  radioChange: function(e) {
+    console.log('radio发生change事件，携带value值为：', e.detail.value)
+  },
+
+  checkboxChange: function(e) {
+    console.log('checkbox发生change事件，携带value值为：', e.detail.value)
   },
 
   onLoad: function() {  //弹窗动画
@@ -29,6 +153,8 @@ Page({
       duration: 600,
       timingFunction: 'ease',
     })
+
+    this.getDataFromApi();//得到数据
   },
 
   // 隐藏弹窗
@@ -42,132 +168,38 @@ Page({
   },
 
   submitAnswer: function() {//提交答案，展示弹窗
-    this.animateTrans.translateY(0).step()
-    this.animateFade.opacity(1).step()
-    this.setData({
-      animationData: this.animateTrans.export(), //动画实例的export方法导出动画数据传递给组件的animation属性
-      animationMask: this.animateFade.export()
+    var app = getApp();
+    var currentIndex = app.globalData.currentIndex;
+    console.log(currentIndex);
+    wx.cloud.callFunction({
+      name: 'update_user_result',
+      data: {
+        union_id:'123',
+        question_id:currentIndex,
+        result:true,
+      },
+      success: res => {
+        wx.showToast({
+          title: '提交成功',
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          title: '提交失败',
+        })
+      }
     })
   },
 
   nextProject: function() {
-    wx.showToast({
-      title: 'title',
-    })
-  },
- 
-  view1Click: function(e) {
-    var select = e.target.id
-    // 选项没被选择时将执行
-    if (!this.data.isSelect) {
-      // 将选项设置为“已被选择”
-      this.setData({
-        isSelect: true
-      })
-      // 注意！此处必须是'=='而不是'='
-      if (select == this.data.key) {
-        this.setData({
-          view1: 'selection2'
-        })
-      } else {
-        this.setData({
-          view1: 'selection3'
-        })
-        // 将正确选项显示出来
-        this.showAnswer(this.data.key)
-      }
- 
-    }
-  },
-  view2Click: function(e) {
-    var select = e.target.id
-    // 选项没被选择时将执行
-    if (!this.data.isSelect) {
-      this.setData({
-        isSelect: true
-      })
-      // 注意！此处必须是'=='而不是'='
-      if (select == this.data.key) {
-        this.setData({
-          view2: 'selection2'
-        })
-      } else {
-        this.setData({
-          view2: 'selection3'
-        })
-        // 将正确选项显示出来
-        this.showAnswer(this.data.key)
-      }
- 
-    }
-  },
-  view3Click: function(e) {
-    var select = e.target.id
-    // 选项没被选择时将执行
-    if (!this.data.isSelect) {
-      this.setData({
-        isSelect: true
-      })
-      // 注意！此处必须是'=='而不是'='
-      if (select == this.data.key) {
-        this.setData({
-          view3: 'selection2'
-        })
-      } else {
-        this.setData({
-          view3: 'selection3'
-        })
-        // 将正确选项显示出来
-        this.showAnswer(this.data.key)
-      }
- 
-    }
-  },
-  view4Click: function(e) {
-    var select = e.target.id
-    // 选项没被选择时将执行
-    if (!this.data.isSelect) {
-      this.setData({
-        isSelect: true
-      })
-      // 注意！此处必须是'=='而不是'='
-      if (select == this.data.key) {
-        this.setData({
-          view4: 'selection2'
-        })
-      } else {
-        this.setData({
-          view4: 'selection3'
-        })
-        // 将正确选项显示出来
-        this.showAnswer(this.data.key)
-      }
- 
-    }
+    var app = getApp();
+    app.globalData.currentIndex++;
+    console.log(app.globalData.currentIndex++);
+    this.getDataFromApi();
   },
 
-  showAnswer: function(key) {
-    // 通过swith语句判断正确答案，从而显示正确选项
-    switch (key) {
-      case 1:
-        this.setData({
-          view1: 'selection2'
-        })
-        break;
-      case 2:
-        this.setData({
-          view2: 'selection2'
-        })
-        break;
-      case 3:
-        this.setData({
-          view3: 'selection2'
-        })
-        break;
-      default:
-        this.setData({
-          view4: 'selection2'
-        })
-    }
+  textareaInput2: function (e) {
+    console.log(e.detail.value)
   }
+
 })

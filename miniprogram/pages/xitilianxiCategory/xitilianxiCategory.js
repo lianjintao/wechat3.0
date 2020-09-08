@@ -1,10 +1,14 @@
 // miniprogram/pages/xitilianxiCategory.js
+
+const app = getApp()
+
+
 Page({
 
   /**
    * 页面的初始数据
    */
-  data: {
+  data: {    
     list: [{
       id: 1,
       name: '刑法',
@@ -50,27 +54,33 @@ Page({
   },
 
   click: function() {
-    wx.navigateTo({
-      url: '../chooseProjectAndNum/chooseProjectAndNum',
-    }) 
-  },
-
-    showPicker_03: function () {
-      wx.showToast({
-        title: '发送成功，请返回微信主界面查看',
-      })
-
-    
-    wx.navigateTo({
-      url: '../chooseProjectAndNum/chooseProjectAndNum',
-    }) 
-      /** 
-       *     this.setData({
-      isShow_03: true
+        wx.cloud.callFunction({
+      name: 'get_order_ques',
+      data: {
+        union_id: '123',
+        classify: 1
+      },
+      success: res => {
+        wx.showToast({
+          title: '调用成功',
+        })
+        var app = getApp();
+        app.globalData.quesIdArray = res.result.ques_lst;
+        app.globalData.currentIndex = app.globalData.quesIdArray[0];
+        wx.navigateTo({
+          url: '../choiceQuestion/choiceQuestion',
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '调用失败',
+        })
+        console.error('[云函数] [sum] 调用失败：', err)
+      }
     })
-      */
-
   },
+
   sureCallBack_03 (e) {
     let data = e.detail
     this.setData({

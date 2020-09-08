@@ -1,19 +1,34 @@
 <!--miniprogram/pages/choiceQuestion/choiceQuestion.wxml-->
 
 <view class="modals">
-    <view class="content bottom-pos" animation="{{animationData}}">布局内容</view>
+    <view class="bottom-pos" animation="{{animationData}}">布局内容</view>
 </view>
 
 <view class="container">
-  <view>我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目我是题目</view>
-
-
-<view class='selection'>
-  <view class='{{view1}}' bindtap='view1Click' id='1'>a</view>
-  <view class='{{view2}}' bindtap='view2Click' id='2'>b</view>
-  <view class='{{view3}}' bindtap='view3Click' id='3'>c</view>
-  <view class='{{view4}}' bindtap='view4Click' id='4'>d</view>
+<view class="tabView" mode='widthFix'>
+  <view class="typeView" mode="widthFix">{{typeStr}}</view>
+  <view class="diffView" mode="widthFix">{{difficultyStr}}</view>
 </view>
+  <view class="questionTitle">{{title}}</view>
+
+  <radio-group class="radio-group" bindchange="radioChange">
+    <label class="radio" wx:for="{{singleItems}}">
+        <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+    </label>
+</radio-group>
+
+<checkbox-group bindchange="checkboxChange">
+    <label style="display: block; margin-bottom: 10px;" wx:for-items="{{mutliItems}}">
+      <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+    </label>
+  </checkbox-group>
+
+  <view class="contentView">
+    <view class="textarea_title">{{datiTitle}}</view>
+    <view class="textarea_bg" style="background:{{datiBackGroundColor}}">
+      <textarea bindinput="textareaInput2" style="height: {{line}}" maxlength="-1" />
+    </view>
+  </view> 
 
 <view class="options" mode="widthFix">
   <button class="submitAnswer" bindtap="submitAnswer">提交答案</button>
