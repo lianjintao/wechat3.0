@@ -11,13 +11,13 @@
 </view>
   <view class="questionTitle">{{title}}</view>
 
-  <radio-group class="radio-group" bindchange="radioChange">
+  <radio-group class="radio-group" bindchange="radioChange" mode="widthFix">
     <label class="radio" wx:for="{{singleItems}}">
         <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
     </label>
 </radio-group>
 
-<checkbox-group bindchange="checkboxChange">
+<checkbox-group class="checkbox-group" bindchange="checkboxChange" mode="widthFix">
     <label style="display: block; margin-bottom: 10px;" wx:for-items="{{mutliItems}}">
       <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
     </label>
@@ -31,7 +31,6 @@
   </view> 
 
 <view class="options" mode="widthFix">
-  <button class="submitAnswer" bindtap="submitAnswer">提交答案</button>
-  <button class="nextProject" bindtap="nextProject">下一题</button>
+  <button class="submitAnswer" bindtap="submitAnswer">{{buttonText}}</button>
 </view>
 </view>

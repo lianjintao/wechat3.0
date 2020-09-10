@@ -4,11 +4,20 @@ const app = getApp()
 Page({
 
   onClickXitilianxi: function() {
-    /**wx.navigateTo({
-      url: '../../pages/databaseGuide/databaseGuide'
-    })**/
     wx.navigateTo({
       url: '../xitilianxiCategory/xitilianxiCategory',
+    })
+  },
+
+  onClickNanti: function() {
+    wx.navigateTo({
+      url: '../chooseProjectAndNum/chooseProjectAndNum',
+    })
+  },
+
+  onClickMonilianxi: function() {
+    wx.navigateTo({
+      url: '../monichooseGuide/monichooseGuide',
     })
   },
 

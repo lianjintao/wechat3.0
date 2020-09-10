@@ -6,7 +6,8 @@
     "pages/databaseGuide/databaseGuide",
     "pages/xitilianxiCategory/xitilianxiCategory",
     "pages/chooseProjectAndNum/chooseProjectAndNum",
-    "pages/choiceQuestion/choiceQuestion"
+    "pages/choiceQuestion/choiceQuestion",
+    "pages/monichooseGuide/monichooseGuide"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

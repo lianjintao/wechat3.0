@@ -8,14 +8,22 @@ Page({
     isShow_tixi: false,
     listData_tixi:[['单选题', '多选题', '不定项选择题', '主观题']],
     picker_tixi_data:[],
+    picker_tixi_index:0,
 
     isShow_tishu: false,
     listData_tishu:[['5', '10', '15', '20', '25', '30']],
     picker_tishu_data:[],
+    picker_tishu_index:0,
 
     isShow_nandu: false,
     listData_nandu:[['⭐️ ☆  ☆  ☆  ☆', '⭐️ ⭐️ ☆  ☆  ☆', '⭐️ ⭐️ ⭐️ ☆  ☆','⭐️ ⭐️ ⭐️ ⭐️ ☆','⭐️ ⭐️ ⭐️ ⭐️ ⭐️']],
     picker_nandu_data:[],
+    picker_nandu_index:0,
+
+    isShow_classify: false,
+    listData_classify:[['全部','邢法', '刑诉', '民法','民诉','行政法','商经法','三国法','理论法学']],
+    picker_classify_data:[],
+    picker_classify_index:0,
   },
 
   onClickTixiPicker: function() {
@@ -78,35 +86,60 @@ Page({
     })
   },
 
+  onClickClassifyPicker: function() {
+    this.setData({
+      isShow_classify:true
+    })
+  },
+
+  sureCallBack_classify (e) {
+    let data = e.detail
+    this.setData({
+      isShow_classify: false,
+      picker_classify_data: e.detail.choosedData,
+      picker_classify_index:JSON.stringify(e.detail.choosedIndexArr)
+    })
+  },
+  cancleCallBack_classify () {
+    this.setData({
+      isShow_classify: false,
+    })
+  },
+
 
   onClickStartDati() {
-    wx.navigateTo({
-      url: '../choiceQuestion/choiceQuestion'
+
+    var typeInt = parseInt(this.data.picker_tixi_index[1]) + 1;
+    var numInt = parseInt(this.data.picker_tishu_data[0]);
+    var classifyInt = parseInt(this.data.picker_classify_index[1]);
+    var difficultyInt = parseInt(this.data.picker_nandu_index[1]) + 1;
+    
+    wx.cloud.callFunction({
+      name: 'get_random_ques',
+      data: {
+        type: typeInt,
+        num:numInt,
+        classify: classifyInt,
+        difficulty: difficultyInt
+      },
+      success: res => {
+        wx.showToast({
+          title: '调用成功',
+        })
+        var app = getApp();
+        app.globalData.quesIdArray = res.result.ques_lst;
+        app.globalData.currentIndex = 0;
+        wx.navigateTo({
+          url: '../choiceQuestion/choiceQuestion?id=1',
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '调用失败',
+        })
+        console.error('[云函数] [sum] 调用失败：', err)
+      }
     })
-    // wx.cloud.callFunction({
-    //   name: 'get_ques',
-    //   data: {
-    //     union_id: 123,
-    //     classify: 1,
-    //     type:1,
-    //     num:5
-    //   },
-    //   success: res => {
-    //     wx.showToast({
-    //       title: '调用成功',
-    //     })
-    //     this.setData({
-    //       result: JSON.stringify(res.result)
-    //     })
-    //     console.log(JSON.stringify(res.result))
-    //   },
-    //   fail: err => {
-    //     wx.showToast({
-    //       icon: 'none',
-    //       title: '调用失败',
-    //     })
-    //     console.error('[云函数] [sum] 调用失败：', err)
-    //   }
-    //})
   },
 })
