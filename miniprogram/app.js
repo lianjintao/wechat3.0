@@ -19,7 +19,8 @@ App({
 
     this.globalData = {
       quesIdArray: [],
-      currentIndex:0
+      currentIndex:0,
+      module_id:''
     }
   }
 })

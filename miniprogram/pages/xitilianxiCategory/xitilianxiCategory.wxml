@@ -11,9 +11,13 @@
 <!-- 包裹两行文字 -->
 <view class="view_wenzi2">
 
-  <text>{{item.name}}</text>
+	<view class="categoryInfo">
+		<text>{{item.name}}</text>
+		<text class="doneCount">{{item.doneCount}}</text>
+	  <text class="totalCount">/ {{item.totalCount}}</text>
+	</view>
   
-  <text class="text_small">{{item.content}}</text>
+	<text class="text_small">{{item.content}}</text>
   
 </view>
 
@@ -22,14 +26,3 @@
 </block>
 
 </view>
-
-<button bindtap="showPicker_03">多列非联动picker</button>
-<view>选择数据：{{picker_03_data}}</view>
-<view>选择索引：{{picker_03_index}}</view>
-<picker
-	isShowPicker="{{isShow_03}}"
-	bindsure="sureCallBack_03"
-	bindcancle="cancleCallBack_03"
-	scrollType="normal"
-	listData="{{listData_03}}"
-></picker>

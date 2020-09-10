@@ -8,6 +8,8 @@ Page({
 
     animationData: {}, //内容动画
     animationMask: {}, //蒙板动画
+    id:0,
+    buttonText:'',
 
     title:'',
     type:0,
@@ -23,17 +25,17 @@ Page({
     focus: false,
     line:'0em',
     datiTitle:'',
-    datiBackGroundColor:'#ff0000'
+    datiBackGroundColor:'#ff0000',
+    chooseAnswer:[]
   },
 
   getDataFromApi: function() {
     var app = getApp();
-    var currentIndex = app.globalData.currentIndex;
-    console.log(currentIndex);
+    var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
     wx.cloud.callFunction({
       name: 'get_ques_info',
       data: {
-        question_id:currentIndex
+        question_id:currentQuesId
       },
       success: res => {
         console.log(res)
@@ -136,14 +138,17 @@ Page({
   },
 
   radioChange: function(e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value)
+    console.log('radio发生change事件，携带value值为：', e.detail.value);
+    console.log(typeof(e.detail.value));
+    var answerList = [];
+
   },
 
   checkboxChange: function(e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value)
   },
 
-  onLoad: function() {  //弹窗动画
+  onLoad: function(options) {  //弹窗动画
     this.animateTrans = wx.createAnimation({
       duration: 600,
       timingFunction: 'ease',
@@ -152,6 +157,20 @@ Page({
     this.animateFade = wx.createAnimation({
       duration: 600,
       timingFunction: 'ease',
+    })
+
+    this.setData({
+      id:options.id
+    })
+    var text = '';
+    if (this.data.id == 0) {
+      text = '提交答案';
+    } else {
+      text = '下一题';
+    }
+
+    this.setData({
+      buttonText:text
     })
 
     this.getDataFromApi();//得到数据
@@ -167,35 +186,71 @@ Page({
     })
   },
 
-  submitAnswer: function() {//提交答案，展示弹窗
-    var app = getApp();
-    var currentIndex = app.globalData.currentIndex;
-    console.log(currentIndex);
-    wx.cloud.callFunction({
-      name: 'update_user_result',
-      data: {
-        union_id:'123',
-        question_id:currentIndex,
-        result:true,
-      },
-      success: res => {
-        wx.showToast({
-          title: '提交成功',
-        })
-      },
-      fail: err => {
-        wx.showToast({
-          title: '提交失败',
-        })
-      }
-    })
+  submitAnswer: function() {
+    //文案：提交答案，展示解析弹窗，弹窗中有按钮，跳到下一题
+    if (this.data.id == 0) {
+
+      /**提交答案**/
+      var app = getApp();
+      var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
+      wx.cloud.callFunction({
+        name: 'update_user_result',
+        data: {
+          union_id:'123',
+          question_id:currentQuesId,
+          result:true,
+        },
+        success: res => {
+          wx.showToast({
+            title: '提交成功',
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            title: '提交失败',
+          })
+        }
+      })
+      /**
+       * 下一题
+       */
+      var app = getApp();
+      app.globalData.currentIndex++;
+      this.getDataFromApi();
+
+    } else if (this.data.id == 1) {
+      /**
+       * 文案：下一题
+       * 更新答案：update_user_answer
+       * 加载下一题
+       */
+      var app = getApp();
+      var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
+      var moludeId = app.globalData.module_id;
+      wx.cloud.callFunction({
+        name: 'update_user_answer',
+        data: {
+          union_id:'123',
+          question_id:currentQuesId,
+          result:true,
+        },
+        success: res => {
+          wx.showToast({
+            title: '提交成功',
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            title: '提交失败',
+          })
+        }
+      })
+
+
+    }
   },
 
   nextProject: function() {
-    var app = getApp();
-    app.globalData.currentIndex++;
-    console.log(app.globalData.currentIndex++);
-    this.getDataFromApi();
   },
 
   textareaInput2: function (e) {

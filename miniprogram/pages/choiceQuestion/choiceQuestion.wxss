@@ -42,18 +42,9 @@
   }
 
   .submitAnswer {
-    left: 0px;
     position: absolute;
-    width: 45%;
+    width: 100%;
     background-color: indianred;
-    text-align: center;
-  }
-
-  .nextProject {
-    right: 0px;
-    position: absolute;
-    background-color: indianred;
-    width: 45%;
     text-align: center;
   }
 
@@ -101,6 +92,10 @@
     width: fit-content;
   }
 
+  .radio-group {
+    width: 100%;
+  }
+
   .radio {
     display: list-item;
     margin: 10px;
@@ -121,3 +116,7 @@
     width: 700rpx;
     padding: 25rpx 0;
   } 
+
+  .checkbox-group {
+    width: 100%;
+  }

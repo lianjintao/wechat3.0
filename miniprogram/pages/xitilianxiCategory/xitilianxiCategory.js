@@ -12,53 +12,64 @@ Page({
     list: [{
       id: 1,
       name: '刑法',
-      content: "我是张三，见到大家很高兴。。。"
+      content: "我是张三，见到大家很高兴。。。",
+      doneCount:'',
+      totalCount:''
     },{
       id: 2,
       name: '刑诉',
-      content: "我是李四，可以带大将去玩。。。。"
-
+      content: "我是李四，可以带大将去玩。。。。",
+      doneCount:'',
+      totalCount:''
     },{
         id: 3,
         name: '民法',
-        content: "我是王五，我编码贼好。。。。"
-
+        content: "我是王五，我编码贼好。。。。",
+        doneCount:'',
+        totalCount:''
       },{
         id: 4,
         name: '民诉',
-        content: "我是张三，见到大家很高兴。。。"
+        content: "我是张三，见到大家很高兴。。。",
+        doneCount:'',
+        totalCount:''
       },{
         id: 5,
         name: '行政法',
-        content: "我是李四，可以带大将去玩。。。。"
-  
+        content: "我是李四，可以带大将去玩。。。。",
+        doneCount:'',
+        totalCount:''
       },{
           id: 6,
           name: '商经法',
-          content: "我是王五，我编码贼好。。。。"
-  
+          content: "我是王五，我编码贼好。。。。",
+          doneCount:'',
+          totalCount:''
         },{
           id: 7,
           name: '三国法',
-          content: "我是张三，见到大家很高兴。。。"
+          content: "我是张三，见到大家很高兴。。。",
+          doneCount:'',
+          totalCount:''
         },{
           id: 8,
           name: '理论法学',
-          content: "我是李四，可以带大将去玩。。。。"
-    
+          content: "我是李四，可以带大将去玩。。。。",
+          doneCount:'',
+          totalCount:''
         }],
 
-        isShow_03: false,
-        listData_03:[['单选题', '多选题', '不定向选择题', '主观题'],['5','10', '15', '20', '25', '30'],['1','2','3','4','5']],
-        picker_03_data:[],
+        doneCountList:[],
+        totalCountList:[]
   },
 
-  click: function() {
+  click: function(e) {
+    var index = parseInt(e.currentTarget.id) + 1;
         wx.cloud.callFunction({
       name: 'get_order_ques',
       data: {
         union_id: '123',
-        classify: 1
+        classify: index
       },
       success: res => {
         wx.showToast({
@@ -66,9 +77,9 @@ Page({
         })
         var app = getApp();
         app.globalData.quesIdArray = res.result.ques_lst;
-        app.globalData.currentIndex = app.globalData.quesIdArray[0];
+        app.globalData.currentIndex = 0;
         wx.navigateTo({
-          url: '../choiceQuestion/choiceQuestion',
+          url: '../choiceQuestion/choiceQuestion?id=0',
         })
       },
       fail: err => {
@@ -81,17 +92,44 @@ Page({
     })
   },
 
-  sureCallBack_03 (e) {
-    let data = e.detail
-    this.setData({
-      isShow_03: false,
-      picker_03_data: e.detail.choosedData,
-      picker_03_index:JSON.stringify(e.detail.choosedIndexArr)
-    })
-  },
-  cancleCallBack_03 () {
-    this.setData({
-      isShow_03: false,
+  getProgress:function() {
+    wx.cloud.callFunction({
+      name: 'get_user_order_count',
+      data: {
+        union_id:'123'
+      },
+      success: res => {
+        this.setData({
+          doneCountList:res.result.user_complete_count_lst,
+          totalCountList:res.result.ques_count_lst
+        })
+
+        console.log(this.data.doneCountList);
+        console.log(this.data.totalCountList);
+
+        var items = this.data.list;
+        for (var i = 0; i < this.data.totalCountList.length; i++) {
+          items[i].totalCount = this.data.totalCountList[i];
+          console.log(this.data.totalCountList[i]);
+          items[i].doneCount = this.data.doneCountList[i];
+          console.log(this.data.doneCountList[i]);
+        }
+
+        console.log(items);
+        this.setData({
+          list:items
+        })
+
+        console.log(this.data.list);
+      },
+
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '调用失败',
+        })
+        console.error('[云函数] [sum] 调用失败：', err)
+      }
     })
   },
 
@@ -99,7 +137,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getProgress();
   },
 
   /**
