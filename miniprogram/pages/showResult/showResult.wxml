@@ -1,0 +1,26 @@
+<!--miniprogram/pages/showResult/showResult.wxml-->
+<view class="container">
+
+<view>得分</view>
+<view>100分，很棒，继续保持</view>
+
+<block wx:for="{{list}}" wx:key="index">
+
+<!-- 包裹图片+两行文字 id="{{index}}"是给按下了那个item记录-->
+
+<view class="view_tupian_wenzi" bindtap="click" id="{{index}}">
+
+<!-- 包裹两行文字 -->
+<view class="view_wenzi2">
+
+  <text>{{item.result}}</text>
+  
+  <text class="text_small">{{item.id}}</text>
+  
+</view>
+
+</view>
+
+</block>
+
+</view>

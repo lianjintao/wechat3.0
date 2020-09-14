@@ -26,12 +26,15 @@ Page({
     line:'0em',
     datiTitle:'',
     datiBackGroundColor:'#ff0000',
-    chooseAnswer:[]
+    chooseAnswerList:[],
+    chooseAnswerStr:'',
+    datiResult:''
   },
 
   getDataFromApi: function() {
     var app = getApp();
     var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
+    console.log(currentQuesId);
     wx.cloud.callFunction({
       name: 'get_ques_info',
       data: {
@@ -44,8 +47,13 @@ Page({
           type:res.result.type,
           title:res.result.title,
           options:res.result.options, 
+          answer:res.result.ans,
         })
-
+        if(app.globalData.currentIndex == app.globalData.quesIdArray.length - 1) {
+          this.setData({
+            buttonText:'提交试卷'
+          })
+        }
         var optionA = {};
         optionA.name='A';
         var titleA = this.data.options[0];
@@ -100,7 +108,7 @@ Page({
         if (type == 1) {
           typeStr1 = '单选题';
           //进行UI布局的改变
-        } else if (type == 2 || type == 3) {
+        } else if (type == 2) {
           typeStr1 = '多选题';
         } else if (type == 3) {
           typeStr1 = '不定向';
@@ -132,20 +140,22 @@ Page({
           icon: 'none',
           title: '调用失败',
         })
-        console.error('[云函数] [sum] 调用失败：', err)
+        console.error('[云函数2222222] [sum] 调用失败：', err)
       }
     })
   },
 
-  radioChange: function(e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value);
-    console.log(typeof(e.detail.value));
-    var answerList = [];
-
+  radioChange: function(e) {//单选
+    this.setData({
+      chooseAnswerStr:e.detail.value
+    })
   },
 
   checkboxChange: function(e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+    this.setData({
+      chooseAnswerList : e.detail.value
+    })
   },
 
   onLoad: function(options) {  //弹窗动画
@@ -188,17 +198,35 @@ Page({
 
   submitAnswer: function() {
     //文案：提交答案，展示解析弹窗，弹窗中有按钮，跳到下一题
+
+    var app = getApp();
+    if (app.globalData.currentIndex == app.globalData.quesIdArray.length - 1) { //做到最后一题就得提交试卷和一套题了
+      wx.navigateTo({
+        url: '../showResult/showResult',
+      })
+      return;
+    }
+
     if (this.data.id == 0) {
 
       /**提交答案**/
       var app = getApp();
       var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
+
+      var result;
+      if (this.data.type == 1) {
+        result = this.data.answer == this.data.chooseAnswerStr ? true :false;
+      } else if (this.data.type == 2 || this.data.type == 3) {
+        console(this.data.chooseAnswerList);
+        console(this.data.answer);
+        result = this.ans_transfer(this.data.chooseAnswerList) == this.data.answer ? true:false;
+      }
       wx.cloud.callFunction({
         name: 'update_user_result',
         data: {
           union_id:'123',
           question_id:currentQuesId,
-          result:true,
+          result:result,
         },
         success: res => {
           wx.showToast({
@@ -227,12 +255,24 @@ Page({
       var app = getApp();
       var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
       var moludeId = app.globalData.module_id;
+      var result;
+      if (this.data.type == 1) {
+        result = this.data.chooseAnswerStr;
+      } else if (this.data.type == 2 || this.data.type == 3) {
+        result = this.ans_transfer(this.data.chooseAnswerList);
+      } else {
+        result = this.data.datiResult;
+      }
+      console.log(this.data.answer);
+      console.log(this.data.chooseAnswerStr);
+      console.log(result);
+
       wx.cloud.callFunction({
         name: 'update_user_answer',
         data: {
-          union_id:'123',
           question_id:currentQuesId,
-          result:true,
+          ans:result,
+          module_id:moludeId
         },
         success: res => {
           wx.showToast({
@@ -246,8 +286,22 @@ Page({
         }
       })
 
-
+      var app = getApp();
+      app.globalData.currentIndex++;
+      this.getDataFromApi();
     }
+  },
+
+  ans_transfer: function (ans){
+    var res_str = ""
+    var lst = ["A","B","C","D"]
+    for(let i = 0;i < 4;i++){
+      if(ans.indexOf(lst[i]) >= 0){
+        res_str += lst[i]
+      }
+    }
+    console.log(res_str)
+    return res_str
   },
 
   nextProject: function() {
@@ -255,6 +309,11 @@ Page({
 
   textareaInput2: function (e) {
     console.log(e.detail.value)
+    this.setData({
+      datiResult:e.detail.value
+    })
+
+    e.detail.value = '';
   }
 
 })

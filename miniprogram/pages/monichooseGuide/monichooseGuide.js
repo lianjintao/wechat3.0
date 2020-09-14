@@ -20,6 +20,7 @@ Page({
         })
         var app = getApp();
         app.globalData.quesIdArray = res.result.ques_lst;
+        console.log(res.result.ques_lst);
         app.globalData.currentIndex = 0;
         app.globalData.module_id = res.result.module_id;
 
@@ -36,8 +37,30 @@ Page({
   },
 
   answerQuestionButton: function() {
-    wx.showToast({
-      title: '点击成功',
+    wx.cloud.callFunction({
+      name: 'get_module_ques_lst',
+      data: {
+        is_choice:false
+      },
+      success: res => {
+        wx.showToast({
+          title: '提交成功',
+        })
+        var app = getApp();
+        app.globalData.quesIdArray = res.result.ques_lst;
+        console.log(res.result.ques_lst);
+        app.globalData.currentIndex = 0;
+        app.globalData.module_id = res.result.module_id;
+
+        wx.navigateTo({
+          url: '../choiceQuestion/choiceQuestion?id=1',
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          title: '提交失败',
+        })
+      }
     })
   },
 
