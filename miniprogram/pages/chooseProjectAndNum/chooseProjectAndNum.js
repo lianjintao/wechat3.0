@@ -127,8 +127,10 @@ Page({
           title: '调用成功',
         })
         var app = getApp();
+        console.log(res.result.ques_lst);
         app.globalData.quesIdArray = res.result.ques_lst;
         app.globalData.currentIndex = 0;
+        app.globalData.module_id = res.result.module_id;
         wx.navigateTo({
           url: '../choiceQuestion/choiceQuestion?id=1',
         })
@@ -138,7 +140,7 @@ Page({
           icon: 'none',
           title: '调用失败',
         })
-        console.error('[云函数] [sum] 调用失败：', err)
+        console.error('[云函数111111] [sum] 调用失败：', err)
       }
     })
   },
