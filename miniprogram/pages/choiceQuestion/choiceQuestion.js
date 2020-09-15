@@ -73,18 +73,14 @@ Page({
           answer: res.result.ans,
           analysis: res.result.analysis
         }
+        if (this.data.id == 0) {
+          data_dict['buttonText'] = "提交答案"
+        } else if (this.data.id == 1){
+          data_dict['buttonText'] = "下一题"
+        } else if (this.data.id == 3) {
+          data_dict['buttonText'] = "解析"
+        }
 
-        // if (options.id == 0) {
-        //   text = '';
-        // } else if (this.data.id == 1){
-        //   text = '下一题';
-        // } else if (this.data.id == 3) {
-        //   text = '解析';
-        // }
-        // this.setData({
-        //   id:options.id,
-        //   buttonText:text
-        // })
         console.log(this.data.id);
         console.log(res.result.analysis);
 
@@ -214,7 +210,6 @@ Page({
 
   onLoad: function(options) {  //弹窗动画
     console.log("!!!!!!!!!!!!!!!!!")
-    console.log(options)
     wx.showLoading({
       title: '加载中',
     })
@@ -228,18 +223,8 @@ Page({
       timingFunction: 'ease',
     })
 
-    
-    var text = '';
-    if (options.id == 0) {
-      text = '';
-    } else if (this.data.id == 1){
-      text = '下一题';
-    } else if (this.data.id == 3) {
-      text = '解析';
-    }
     this.setData({
       id:options.id,
-      buttonText:text
     })
 
     
