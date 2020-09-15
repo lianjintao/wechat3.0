@@ -9,6 +9,8 @@ Page({
     show: false,
     area_show: false,
     analysis_show: false,
+    button_show : true,
+    check_disabled:false,
 
     animationData: {}, //内容动画
     animationMask: {}, //蒙板动画
@@ -47,7 +49,9 @@ Page({
 
   close: function() {
     this.setData({
-      show: false
+      show: false,
+      button_show: false,
+      check_disabled: true
     })
   },
 
@@ -71,9 +75,11 @@ Page({
           title:res.result.title,
           options:res.result.options, 
           answer: res.result.ans,
-          analysis: res.result.analysis
+          analysis: res.result.analysis,
+          button_show: true,
+          check_disabled:false
         }
-        if (this.data.id == 0) {
+        if (this.data.id == 0 || this.data.id == 2) {
           data_dict['buttonText'] = "提交答案"
         } else if (this.data.id == 1){
           data_dict['buttonText'] = "下一题"
@@ -209,7 +215,6 @@ Page({
   },
 
   onLoad: function(options) {  //弹窗动画
-    console.log("!!!!!!!!!!!!!!!!!")
     wx.showLoading({
       title: '加载中',
     })
@@ -293,12 +298,6 @@ Page({
         fail: err => {
         }
       })
-      /**
-       * 下一题
-       */
-      // var app = getApp();
-      // app.globalData.currentIndex++;
-      // this.getDataFromApi();
 
     } else if (this.data.id == 1) {
       /**
@@ -341,6 +340,12 @@ Page({
       app.globalData.currentIndex++;
       this.getDataFromApi();
     }
+  },
+
+  readResult: function(){
+    this.setData({
+      show: true
+    })
   },
 
   ans_transfer: function (ans){
