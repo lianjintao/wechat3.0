@@ -33,4 +33,6 @@
 <view class="options" mode="widthFix">
   <button class="submitAnswer" bindtap="submitAnswer">{{buttonText}}</button>
 </view>
+
+<view class="analysisView">{{analysis}}</view>
 </view>

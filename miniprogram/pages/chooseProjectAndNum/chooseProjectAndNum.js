@@ -123,9 +123,6 @@ Page({
         difficulty: difficultyInt
       },
       success: res => {
-        wx.showToast({
-          title: '调用成功',
-        })
         var app = getApp();
         console.log(res.result.ques_lst);
         app.globalData.quesIdArray = res.result.ques_lst;
@@ -136,11 +133,6 @@ Page({
         })
       },
       fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '调用失败',
-        })
-        console.error('[云函数111111] [sum] 调用失败：', err)
       }
     })
   },
