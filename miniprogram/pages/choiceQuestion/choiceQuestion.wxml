@@ -6,8 +6,10 @@
 
 <view class="container">
 <view class="tabView" mode='widthFix'>
+  <view class="currentIndex" mode="widthFix">{{currentIndex}}</view>
   <view class="typeView" mode="widthFix">{{typeStr}}</view>
   <view class="diffView" mode="widthFix">{{difficultyStr}}</view>
+  <image class="delete_icon" bindtap="onDelete" mode="widthFix" src="../../images/delete.png"></image>
 </view>
   <view class="questionTitle">{{title}}</view>
 

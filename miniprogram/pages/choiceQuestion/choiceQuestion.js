@@ -9,6 +9,15 @@ Page({
     animationData: {}, //内容动画
     animationMask: {}, //蒙板动画
     id:0,
+
+    /**
+     * id代表从什么来到的答题界面
+     * 0代表顺序练习
+     * 1代表模拟练习和分类练习
+     * 2代表错题练习
+     * 3代表模拟练习和分类练习提交之后的查看
+     */
+
     buttonText:'',
 
     title:'',
@@ -28,7 +37,8 @@ Page({
     datiBackGroundColor:'#ff0000',
     chooseAnswerList:[],
     chooseAnswerStr:'',
-    datiResult:''
+    datiResult:'',
+    currentIndex:1
   },
 
   getDataFromApi: function() {
@@ -214,7 +224,7 @@ Page({
       id:options.id
     })
     var text = '';
-    if (this.data.id == 0) {
+    if (this.data.id == 0 || this.data.id == 2) {
       text = '提交答案';
     } else if (this.data.id == 1){
       text = '下一题';
@@ -284,6 +294,9 @@ Page({
        */
       var app = getApp();
       app.globalData.currentIndex++;
+      this.setData({
+        currentIndex:app.globalData.currentIndex
+      })
       this.getDataFromApi();
 
     } else if (this.data.id == 1) {
@@ -325,7 +338,13 @@ Page({
 
       var app = getApp();
       app.globalData.currentIndex++;
+      var index = app.globalData.currentIndex+1;
+      this.setData({
+        currentIndex:index
+      })
       this.getDataFromApi();
+    } else if (this.data.id == 2) {
+      
     }
   },
 

@@ -78,18 +78,31 @@
     width: 100%;
   }
 
-  .typeView {
+  .currentIndex {
     position: absolute;
     left: 10px;
     background-color: #00bfff;
     width: fit-content;
   }
 
-  .diffView {
+  .typeView {
     position: absolute;
-    left:70px;
+    left: 30px;
     background-color: #00bfff;
     width: fit-content;
+  }
+
+  .diffView {
+    position: absolute;
+    left:90px;
+    background-color: #00bfff;
+    width: fit-content;
+  }
+
+  .delete_icon {
+    position: absolute;
+    right:20px;
+    width: 20px;
   }
 
   .radio-group {
