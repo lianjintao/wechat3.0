@@ -6,6 +6,9 @@ Page({
    */
   data: {
 
+    show: false,
+    area_show: false,
+
     animationData: {}, //内容动画
     animationMask: {}, //蒙板动画
     id:0,
@@ -27,11 +30,30 @@ Page({
     datiTitle:'',
     datiBackGroundColor:'#ff0000',
     chooseAnswerList:[],
-    chooseAnswerStr:'',
+    chooseAnswerStr:'', 
     datiResult:''
   },
 
+  buttontap(e) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    var app = getApp();
+    app.globalData.currentIndex++;
+    this.getDataFromApi();
+    
+  },
+
+  close: function() {
+    this.setData({
+      show: false
+    })
+  },
+
+
+
   getDataFromApi: function() {
+
     var app = getApp();
     var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
     console.log(currentQuesId);
@@ -42,34 +64,36 @@ Page({
       },
       success: res => {
         console.log(res)
-
-        this.setData({
+        var data_dict = {
+          area_show:false,
           type:res.result.type,
           title:res.result.title,
           options:res.result.options, 
-          answer:res.result.ans,
-        })
-        if(app.globalData.currentIndex == app.globalData.quesIdArray.length - 1) {
-          this.setData({
-            buttonText:'提交试卷'
-          })
+          answer: res.result.ans,
+          analysis: res.result.analysis
         }
+        
+        if(app.globalData.currentIndex == app.globalData.quesIdArray.length - 1) {
+          data_dict['buttonText'] = '提交试卷'
+        }
+        // this.setData(data_dict)
         var optionA = {};
         optionA.name='A';
-        var titleA = this.data.options[0];
+        var titleA = res.result.options[0];
+        console.log(res.result.options[0])
         optionA.value= titleA;
 
         var optionB = {};
         optionB.name='B';
-        optionB.value=this.data.options[1];
+        optionB.value=res.result.options[1];
 
         var optionC = {};
         optionC.name='C';
-        optionC.value=this.data.options[2];
+        optionC.value=res.result.options[2];
 
         var optionD = {};
         optionD.name='D';
-        optionD.value=this.data.options[3];
+        optionD.value=res.result.options[3];
 
         let itemss=[];
         itemss.push(optionA);
@@ -80,60 +104,42 @@ Page({
 
         var type = res.result.type;
         if (type == 1) {
-          this.setData({
-            singleItems:itemss,
-            mutliItems:[],
-            line:'0em',
-            datiTitle:'',
-            datiBackGroundColor:'#FFFFFF'
-          })
-        } else if (type == 2 || type == 3) {
-          this.setData({
-            mutliItems:itemss,
-            singleItems:[],
-            line:'0em',
-            datiTitle:'',
-            datiBackGroundColor:'#FFFFFF'
-          })
-        } else {
-          this.setData({
-            mutliItems:[],
-            singleItems:[],
-            line:'10em',
-            datiTitle:'请在输入框内输入你的答案',
-            datiBackGroundColor:'#FF0000'
-          })
-        }
-        var typeStr1 = '';
-        if (type == 1) {
-          typeStr1 = '单选题';
-          //进行UI布局的改变
+          data_dict['mutliItems'] = []
+          data_dict['singleItems'] = itemss
+          data_dict['typeStr']='单选题'
         } else if (type == 2) {
-          typeStr1 = '多选题';
-        } else if (type == 3) {
-          typeStr1 = '不定向';
-        } else if (type == 4) {
-          typeStr1 = '主观题';
-        }
-        this.setData({
-          typeStr:typeStr1
-        })
-        var diff = res.result.difficulty;
-        var diffStr1 = '';
-        if (diff == 1) {
-          diffStr1 = '入门';
-        } else if (diff == 2) {
-          diffStr1 = '简单';
-        } else if (diff == 3) {
-          diffStr1 = '普通';
-        } else if (diff == 4) {
-          diffStr1 = '较难';
+          data_dict['mutliItems'] = itemss
+          data_dict['singleItems'] = []
+          data_dict['typeStr']='多选题'
+        } else if(type == 3){
+          data_dict['mutliItems'] = itemss
+          data_dict['singleItems'] = []
+          data_dict['typeStr']='不定项'
         } else {
-          diffStr1 = '困难';
+          data_dict['mutliItems'] = []
+          data_dict['singleItems'] = []
+          data_dict['line']='10em'
+          data_dict['datiTitle']='请在输入框内输入你的答案'
+          data_dict['datiBackGroundColor']='FFFFFF'
+          data_dict['area_show']=true
+          data_dict['typeStr']='主观题'
         }
-        this.setData({
-          difficultyStr:diffStr1
-        })
+        
+        var diff = res.result.difficulty;
+        if (diff == 1) {
+          data_dict['difficultyStr'] = '入门';
+        } else if (diff == 2) {
+          data_dict['difficultyStr'] = '简单';
+        } else if (diff == 3) {
+          data_dict['difficultyStr'] = '普通';
+        } else if (diff == 4) {
+          data_dict['difficultyStr'] = '较难';
+        } else {
+          data_dict['difficultyStr'] = '困难';
+        }
+        data_dict['show'] = false
+        this.setData(data_dict)
+        wx.hideLoading()
       },
       fail: err => {
         wx.showToast({
@@ -159,6 +165,9 @@ Page({
   },
 
   onLoad: function(options) {  //弹窗动画
+    wx.showLoading({
+      title: '加载中',
+    })
     this.animateTrans = wx.createAnimation({
       duration: 600,
       timingFunction: 'ease',
@@ -169,31 +178,40 @@ Page({
       timingFunction: 'ease',
     })
 
-    this.setData({
-      id:options.id
-    })
+    
     var text = '';
-    if (this.data.id == 0) {
+    if (options.id == 0) {
       text = '提交答案';
     } else {
       text = '下一题';
     }
-
     this.setData({
+      id:options.id,
       buttonText:text
     })
 
+    
     this.getDataFromApi();//得到数据
   },
 
+  onReady:function(){
+    wx.hideLoading()
+  },
+
+
   // 隐藏弹窗
   hideModal: function() {
-    this.animateTrans.translateY(300).step()
-    this.animateFade.opacity(0).step()
-    this.setData({
-      animationData: this.animateTrans.export(),
-      animationMask: this.animateFade.export()
-    })
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    // this.animateTrans.translateY(300).step()
+    // this.animateFade.opacity(0).step()
+    // this.setData({
+    //   animationData: this.animateTrans.export(),
+    //   animationMask: this.animateFade.export()
+    // })
+  },
+
+  submit: function(){
+    
   },
 
   submitAnswer: function() {
@@ -208,7 +226,6 @@ Page({
     }
 
     if (this.data.id == 0) {
-
       /**提交答案**/
       var app = getApp();
       var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
@@ -217,20 +234,22 @@ Page({
       if (this.data.type == 1) {
         result = this.data.answer == this.data.chooseAnswerStr ? true :false;
       } else if (this.data.type == 2 || this.data.type == 3) {
-        console(this.data.chooseAnswerList);
-        console(this.data.answer);
-        result = this.ans_transfer(this.data.chooseAnswerList) == this.data.answer ? true:false;
+        this.setData({
+          chooseAnswerStr: this.ans_transfer(this.data.chooseAnswerList)
+        })
+        console.log(this.data.chooseAnswerStr)
+        console.log(this.data.answer);
+        result = this.data.chooseAnswerStr == this.data.answer ? true:false;
       }
       wx.cloud.callFunction({
         name: 'update_user_result',
         data: {
-          union_id:'123',
           question_id:currentQuesId,
           result:result,
         },
         success: res => {
-          wx.showToast({
-            title: '提交成功',
+          this.setData({
+            show: true
           })
         },
         fail: err => {
@@ -242,9 +261,9 @@ Page({
       /**
        * 下一题
        */
-      var app = getApp();
-      app.globalData.currentIndex++;
-      this.getDataFromApi();
+      // var app = getApp();
+      // app.globalData.currentIndex++;
+      // this.getDataFromApi();
 
     } else if (this.data.id == 1) {
       /**
@@ -304,13 +323,16 @@ Page({
     return res_str
   },
 
+
+
   nextProject: function() {
   },
 
   textareaInput2: function (e) {
     console.log(e.detail.value)
     this.setData({
-      datiResult:e.detail.value
+      datiResult:e.detail.value,
+      chooseAnswerStr: e.detail.value
     })
 
     e.detail.value = '';

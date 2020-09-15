@@ -73,7 +73,8 @@ Page({
       },
       success: res => {
         wx.showToast({
-          title: '调用成功',
+          title: '加载中',
+          icon: 'loading'
         })
         var app = getApp();
         app.globalData.quesIdArray = res.result.ques_lst;
@@ -137,7 +138,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getProgress();
+    // this.getProgress();
   },
 
   /**
@@ -151,7 +152,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getProgress();
   },
 
   /**

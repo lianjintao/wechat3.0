@@ -11,6 +11,7 @@ exports.main = async (event) => {
   if(typeof(union_id)=="undefined"){
     union_id = "123"
   }
+  console.log(union_id)
 
   const question_id = event.question_id
   const result = event.result

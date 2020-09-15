@@ -18,8 +18,6 @@ exports.main = async (event) => {
   var ques_count_lst = []
   var user_complete_count_lst = [0,0,0,0,0,0,0,0]
 
-  console.log(union_id)
-
   
   var ques_count_res = await db.collection('ques_count')
   .field({
@@ -27,12 +25,12 @@ exports.main = async (event) => {
     count: true
   }).get()
 
-  console.log(ques_count_res)
+  // console.log(ques_count_res)
 
   for(let i = 0;i < 8;i++){
     ques_count_lst.push(ques_count_res.data[i].count)
   }
-  console.log(ques_count_lst)
+  // console.log(ques_count_lst)
 
   const $ = db.command.aggregate
   var user_complete_count_res = await db.collection('user_history')
@@ -47,16 +45,12 @@ exports.main = async (event) => {
   })
   .end()
 
-  console.log(user_complete_count_res)
+  // console.log(user_complete_count_res)
   const lst = user_complete_count_res.list
   for(let i = 0;i < lst.length;i++){
     user_complete_count_lst[lst[i]._id-1] = lst[i].count
   }
-  console.log(user_complete_count_lst)
-
-  // for(let i = 0;i < user_complete_count_res.length)
-
-  // const user_complete_count = user_complete_count_res.total
+  // console.log(user_complete_count_lst)
 
   return {
     ques_count_lst,

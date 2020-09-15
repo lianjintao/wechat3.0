@@ -7,7 +7,7 @@ cloud.init()
 exports.main = async (event) => {
   // 用于提交试卷，结算用户答案，获得分数
   // 输入： union_id、module_id、during_time
-  // 输出： res_lst
+  // 输出： res_lst  score  ans_lst  user_ans_lst
   const db = cloud.database()
   const module_id = event.module_id
   
@@ -36,8 +36,7 @@ exports.main = async (event) => {
   if(is_choice){ // 为选择题，需要核对答案给出分数
     // 对比用户的答案和标准答案，获得result_lst 和 完成情况
     var ans_res = await db.collection("user_answers").where({
-      module_id: event.module_id,
-      is_finish: false
+      module_id: event.module_id
     }).field({
       ans:true,
       question_id:true
@@ -64,6 +63,8 @@ exports.main = async (event) => {
     var correct_count = res.correct_count
     var done_count = res.done_count
     var score = 1.5*correct_count
+    var ans_lst = res.ans_lst
+    var user_ans_lst = res.user_ans_lst
     console.log(result_dict)
 
     // 构建插入的dict
@@ -89,6 +90,8 @@ exports.main = async (event) => {
     var result_dict = new Map()
     var done_count = ques_lst.length
     var score = 0
+    var ans_lst = []
+    var user_ans_lst = []
     // 构建插入的dict
     user_history_lst = []
     for(let i = 0;i < ques_lst.length;i++){
@@ -148,14 +151,17 @@ exports.main = async (event) => {
   }
   
 
-  let result= Object.create(null);
+  let result= []
+  console.log(result_dict)
   for (let[k,v] of result_dict) {
-      result[k] = v;
+      result.push(v)
   }
 
   return {
     result,
-    score
+    score,
+    ans_lst,
+    user_ans_lst
   }
 
 
@@ -169,10 +175,15 @@ exports.main = async (event) => {
   }
 
   function compare_ans(user_dict,ans_dict){
+    // user_dict是按照题目顺序的，ans_dict不是按照顺序
     var result_dict = new Map()
     var correct_count = 0
     var done_count = 0
+    var ans_lst = []
+    var user_ans_lst = []
     for(let item of user_dict.keys()){
+      ans_lst.push(ans_dict.get(item))
+      user_ans_lst.push(user_dict.get(item))
       if(user_dict.get(item) == ans_dict.get(item)){
         correct_count += 1
         result_dict.set(item, true)
@@ -188,7 +199,9 @@ exports.main = async (event) => {
     return {
       dict:result_dict,
       correct_count:correct_count,
-      done_count:done_count
+      done_count:done_count,
+      ans_lst:ans_lst,
+      user_ans_lst:user_ans_lst
     }
   }
 
