@@ -15,9 +15,6 @@ Page({
         is_choice:true
       },
       success: res => {
-        wx.showToast({
-          title: '提交成功',
-        })
         var app = getApp();
         app.globalData.quesIdArray = res.result.ques_lst;
         console.log(res.result.ques_lst);
@@ -29,9 +26,6 @@ Page({
         })
       },
       fail: err => {
-        wx.showToast({
-          title: '提交失败',
-        })
       }
     })
   },
@@ -43,9 +37,6 @@ Page({
         is_choice:false
       },
       success: res => {
-        wx.showToast({
-          title: '提交成功',
-        })
         var app = getApp();
         app.globalData.quesIdArray = res.result.ques_lst;
         console.log(res.result.ques_lst);
@@ -57,9 +48,6 @@ Page({
         })
       },
       fail: err => {
-        wx.showToast({
-          title: '提交失败',
-        })
       }
     })
   },

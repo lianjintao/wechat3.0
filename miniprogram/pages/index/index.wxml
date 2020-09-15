@@ -13,7 +13,7 @@
 
 <button class="cuotiben_button" bindtap="onClickCuotoben" mode="widthFix">.</button>
 <image class="cuotiben_icon" bindtap="onClickCuotoben" mode="widthFix" src="../../images/cuotiben.png"></image>
-<view class="cuotiben_title" bindtap="onClickCuotoben">错题本</view>
+<view class="cuotiben_title" bindtap="onClickCuotoben">错题本:{{wrongNumber}}</view>
 
 <button class="nanti_button" bindtap="onClickNanti" mode="widthFix">.</button>
 <image class="nanti_icon" bindtap="onClickNanti" mode="widthFix" src="../../images/nanti.png"></image>

@@ -52,3 +52,27 @@
   color: #7a7878;
   margin-top: 10rpx
 }
+
+.ans_view {
+  width: 100%;
+}
+
+.your_ans_text {
+  left: 20px;
+  width: fit-content;
+}
+
+.your_ans {
+  left: 60px;
+  width: fit-content;
+}
+
+.ans_text {
+  left: 100px;
+  width: fit-content;
+}
+
+.ans {
+  left: 140px;
+  width: fit-content;
+}

@@ -11,13 +11,17 @@ Page({
   },
 
   click: function (e) { 
-    console.log("按了：", e.currentTarget.id)
+    console.log("按了：", e.currentTarget.id);
+    var app = getApp();
+    app.globalData.currentIndex = e.currentTarget.id;
+
+    wx.navigateTo({
+      url: '../choiceQuestion/choiceQuestion?id=3',
+    })
   },
 
   getResult: function() {
       var moduleId = app.globalData.module_id;
-      console.log(app.globalData.module_id);
-      console.log(moduleId);
       wx.cloud.callFunction({
         name: 'submit_module_ques',
         data: {
@@ -25,9 +29,6 @@ Page({
           during_time:'123'
         },
         success: res => {     //返回的结果
-          wx.showToast({
-            title: '提交成功',
-          })
           console.log(res)
           var listV = [];
           for (var i=0; i < res.result.result.length;i++) {
@@ -42,10 +43,6 @@ Page({
           })
         },
         fail: err => {
-          console.log(err)
-          wx.showToast({
-            title: '提交失败',
-          })
         }
       })
   }

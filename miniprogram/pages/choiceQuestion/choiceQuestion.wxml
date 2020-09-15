@@ -68,4 +68,6 @@
     <!-- <button class="submitAnswer" bindtap="submitAnswer">{{buttonText}}</button> -->
     <button class="submitAnswer" bindtap="submitAnswer">{{buttonText}}</button>
   </view>
+
+  <view class="analysisView" wx:if="{{area_show}}">{{analysis}}</view>
 </view>

@@ -3,6 +3,10 @@ const app = getApp()
 
 Page({
 
+  data: {
+    wrongNumber:0
+  },
+
   onClickXitilianxi: function() {
     wx.navigateTo({
       url: '../xitilianxiCategory/xitilianxiCategory',
@@ -21,6 +25,24 @@ Page({
     })
   },
 
+  onClickCuotoben: function() {
+    wx.cloud.callFunction({
+      name: 'get_error_lst',
+      data: {
+      },
+      success: res => {
+        var app = getApp();
+        app.globalData.quesIdArray = res.result.error_ques_lst;
+        app.globalData.currentIndex = 0;
+        wx.navigateTo({
+          url: '../choiceQuestion/choiceQuestion?id=2',
+        })
+      },
+      fail: err => {
+      }
+    })
+  },
+
   data: {
     avatarUrl: './user-unlogin.png',
     userInfo: {},
@@ -30,6 +52,8 @@ Page({
   },
 
   onLoad: function() {
+
+    this.getWrongNumber();
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -51,6 +75,22 @@ Page({
             }
           })
         }
+      }
+    })
+  },
+
+  getWrongNumber: function() {
+    wx.cloud.callFunction({
+      name: 'get_error_num',
+      data: {
+      },
+      success: res => {
+        this.setData({
+          wrongNumber:res.result.error_num
+        })
+        console.log(res)
+      },
+      fail: err => {
       }
     })
   },
@@ -107,7 +147,6 @@ Page({
           cloudPath,
           filePath,
           success: res => {
-            console.log('[上传文件] 成功：', res)
 
             app.globalData.fileID = res.fileID
             app.globalData.cloudPath = cloudPath

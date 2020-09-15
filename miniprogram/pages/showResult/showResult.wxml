@@ -12,10 +12,16 @@
 
 <!-- 包裹两行文字 -->
 <view class="view_wenzi2">
-
-  <text>{{item.result}}</text>
-  
   <text class="text_small">{{item.id}}</text>
+
+  <view class="ans_view" mode="widthFix">
+  <view class="your_ans_text" mode="widthFix">你的答案</view>
+  <view class="your_ans" mode="widthFix">A</view>
+  <view class="ans_text" mode="widthFix">正确答案</view>
+  <view class="ans" mode="widthFix">B</view>
+  </view>
+  
+  <text>{{item.result}}</text>
   
 </view>
 

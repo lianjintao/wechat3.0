@@ -68,14 +68,9 @@ Page({
         wx.cloud.callFunction({
       name: 'get_order_ques',
       data: {
-        union_id: '123',
         classify: index
       },
       success: res => {
-        wx.showToast({
-          title: '加载中',
-          icon: 'loading'
-        })
         var app = getApp();
         app.globalData.quesIdArray = res.result.ques_lst;
         app.globalData.currentIndex = 0;
@@ -84,11 +79,6 @@ Page({
         })
       },
       fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '调用失败',
-        })
-        console.error('[云函数] [sum] 调用失败：', err)
       }
     })
   },
@@ -125,11 +115,6 @@ Page({
       },
 
       fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '调用失败',
-        })
-        console.error('[云函数] [sum] 调用失败：', err)
       }
     })
   },

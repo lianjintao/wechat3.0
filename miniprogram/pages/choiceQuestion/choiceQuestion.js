@@ -8,6 +8,7 @@ Page({
 
     show: false,
     area_show: false,
+    analysis_show: false,
 
     animationData: {}, //内容动画
     animationMask: {}, //蒙板动画
@@ -72,7 +73,25 @@ Page({
           answer: res.result.ans,
           analysis: res.result.analysis
         }
-        
+
+        // if (options.id == 0) {
+        //   text = '';
+        // } else if (this.data.id == 1){
+        //   text = '下一题';
+        // } else if (this.data.id == 3) {
+        //   text = '解析';
+        // }
+        // this.setData({
+        //   id:options.id,
+        //   buttonText:text
+        // })
+        console.log(this.data.id);
+        console.log(res.result.analysis);
+
+        if (this.data.id == 3) {
+          data_dict['analysis_show'] = true
+        }
+
         if(app.globalData.currentIndex == app.globalData.quesIdArray.length - 1) {
           data_dict['buttonText'] = '提交试卷'
         }
@@ -94,6 +113,35 @@ Page({
         var optionD = {};
         optionD.name='D';
         optionD.value=res.result.options[3];
+
+        if (this.data.type == 1 && this.data.id == 3) {
+          if (this.data.answer == 'A') {
+            optionA.checked=true;
+          } else if (this.data.answer == 'B') {
+            optionB.checked=true;
+          } else if (this.data.answer == 'C') {
+            optionC.checked=true;
+          } else if (this.data.answer == 'D') {
+            optionD.checked=true;
+          }
+        }
+
+        if ((this.data.type == 2 || this.data.type == 3)&& this.data.id == 3) {
+          var ansArray = this.transferToArray(this.data.answer);
+          console.log(ansArray);
+          for (let index = 0; index < ansArray.length; index++) {
+            var element = array[index];
+            if (element == 'A') {
+              optionA.checked=true;
+            } else if (element == 'B') {
+              optionB.checked=true;
+            } else if (element == 'C') {
+              optionC.checked=true;
+            } else if (element == 'D') {
+              optionD.checked=true;
+            }
+          }
+        }
 
         let itemss=[];
         itemss.push(optionA);
@@ -165,6 +213,8 @@ Page({
   },
 
   onLoad: function(options) {  //弹窗动画
+    console.log("!!!!!!!!!!!!!!!!!")
+    console.log(options)
     wx.showLoading({
       title: '加载中',
     })
@@ -181,9 +231,11 @@ Page({
     
     var text = '';
     if (options.id == 0) {
-      text = '提交答案';
-    } else {
+      text = '';
+    } else if (this.data.id == 1){
       text = '下一题';
+    } else if (this.data.id == 3) {
+      text = '解析';
     }
     this.setData({
       id:options.id,
@@ -192,10 +244,6 @@ Page({
 
     
     this.getDataFromApi();//得到数据
-  },
-
-  onReady:function(){
-    wx.hideLoading()
   },
 
 
@@ -215,6 +263,11 @@ Page({
   },
 
   submitAnswer: function() {
+
+    if (this.data.id == 3) {
+      return;
+    }
+
     //文案：提交答案，展示解析弹窗，弹窗中有按钮，跳到下一题
 
     var app = getApp();
@@ -253,9 +306,6 @@ Page({
           })
         },
         fail: err => {
-          wx.showToast({
-            title: '提交失败',
-          })
         }
       })
       /**
@@ -294,9 +344,6 @@ Page({
           module_id:moludeId
         },
         success: res => {
-          wx.showToast({
-            title: '提交成功',
-          })
         },
         fail: err => {
           wx.showToast({
@@ -323,7 +370,13 @@ Page({
     return res_str
   },
 
-
+  transferToArray: function(ansStr) {
+    var res_array = [];
+    res_array = ansStr.split("")
+    console.log(typeof(res_array))
+    console.log(res_array)
+    return res_array
+    },
 
   nextProject: function() {
   },
