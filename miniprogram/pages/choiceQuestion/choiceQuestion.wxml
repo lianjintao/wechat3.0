@@ -4,37 +4,60 @@
     <view class="bottom-pos" animation="{{animationData}}">布局内容</view>
 </view>
 
-<view class="container">
-<view class="tabView" mode='widthFix'>
-  <view class="currentIndex" mode="widthFix">{{currentIndex}}</view>
-  <view class="typeView" mode="widthFix">{{typeStr}}</view>
-  <view class="diffView" mode="widthFix">{{difficultyStr}}</view>
-  <image class="delete_icon" bindtap="onDelete" mode="widthFix" src="../../images/delete.png"></image>
-</view>
-  <view class="questionTitle">{{title}}</view>
-
-  <radio-group class="radio-group" bindchange="radioChange" mode="widthFix">
-    <label class="radio" wx:for="{{singleItems}}">
-        <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
-    </label>
-</radio-group>
-
-<checkbox-group class="checkbox-group" bindchange="checkboxChange" mode="widthFix">
-    <label style="display: block; margin-bottom: 10px;" wx:for-items="{{mutliItems}}">
-      <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
-    </label>
-  </checkbox-group>
-
-  <view class="contentView">
-    <view class="textarea_title">{{datiTitle}}</view>
-    <view class="textarea_bg" style="background:{{datiBackGroundColor}}">
-      <textarea bindinput="textareaInput2" style="height: {{line}}" maxlength="-1" />
+<view class="fadeIn" wx:if="{{show}}">
+    <view class="weui-mask"  bindtap="close"></view>
+    <view class="weui-half-screen-dialog">
+      <view class="weui-half-screen-dialog__hd">
+        <view class="weui-half-screen-dialog__hd__main">
+          <strong class="weui-half-screen-dialog__title">答案解析</strong>
+        </view>
+      </view>
+      <view class="weui-half-screen-dialog__bd" style="padding-top:3px;height:650rpx;">
+        <scroll-view scroll-y>
+          <view class="title">
+            <text>你的答案：{{chooseAnswerStr}}\n</text>
+            <text>题目解析：\n正确答案：{{answer}}\n{{analysis}}</text>
+          </view>
+        </scroll-view>
+      </view>
+      <button class="weui-btn" type="primary" bindtap="buttontap">下一题</button>
     </view>
-  </view> 
+  </view>
 
-<view class="options" mode="widthFix">
-  <button class="submitAnswer" bindtap="submitAnswer">{{buttonText}}</button>
-</view>
+<!-- <mp-loading type="circle" show="{{loading_show}}" ></mp-loading> -->
 
-<view class="analysisView">{{analysis}}</view>
+<view class="container" >
+  <view class="tabView" mode='widthFix'>
+  <view class="currentIndex" mode="widthFix">{{currentIndex}}</view>
+    <view class="typeView" mode="widthFix">{{typeStr}}</view>
+    <view class="diffView" mode="widthFix">{{difficultyStr}}</view>
+    <image class="delete_icon" mode="widthFix" bindtap="onClinkDelete" src="../../images/delete.png" style="opacity:{{deleteAlpha}}"></image>
+  </view>
+    <view class="questionTitle">{{title}}</view>
+
+    <radio-group class="radio-group" bindchange="radioChange" mode="widthFix">
+      <label class="radio" wx:for="{{singleItems}}">
+          <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+      </label>
+  </radio-group>
+
+  <checkbox-group class="checkbox-group" bindchange="checkboxChange" mode="widthFix">
+      <label style="display: block; margin-bottom: 10px;" wx:for-items="{{mutliItems}}">
+        <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+      </label>
+    </checkbox-group>
+
+    <view class="contentView" wx:if="{{area_show}}">
+      <view class="textarea_title">{{datiTitle}}</view>
+      <view class="textarea_bg" style="background:{{datiBackGroundColor}}">
+        <textarea bindinput="textareaInput2" style="height: {{line}}" maxlength="-1" />
+      </view>
+    </view> 
+
+  <view class="options" mode="widthFix">
+    <!-- <button class="submitAnswer" bindtap="submitAnswer">{{buttonText}}</button> -->
+    <button class="submitAnswer" bindtap="submitAnswer">{{buttonText}}</button>
+  </view>
+
+  <view class="analysisView" wx:if="{{area_show}}">{{analysis}}</view>
 </view>

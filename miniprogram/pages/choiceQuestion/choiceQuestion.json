@@ -1,3 +1,5 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "dialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog"
+  }
 }

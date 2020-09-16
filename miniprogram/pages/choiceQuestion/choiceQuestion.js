@@ -35,6 +35,7 @@ Page({
     line:'0em',
     datiTitle:'',
     datiBackGroundColor:'#ff0000',
+    deleteAlpha:0,
     chooseAnswerList:[],
     chooseAnswerStr:'',
     datiResult:'',
@@ -223,6 +224,16 @@ Page({
     this.setData({
       id:options.id
     })
+
+    var alpha = 0;
+    if (this.data.id == 2) {
+      alpha = 1;
+    }
+
+    this.setData({
+      deleteAlpha:alpha
+    })
+
     var text = '';
     if (this.data.id == 0 || this.data.id == 2) {
       text = '提交答案';
@@ -343,8 +354,7 @@ Page({
         currentIndex:index
       })
       this.getDataFromApi();
-    } else if (this.data.id == 2) {
-      
+    } else if (this.data.id == 2) { //错题
     }
   },
 
@@ -378,6 +388,33 @@ Page({
     })
 
     e.detail.value = '';
+  },
+
+  onClinkDelete: function() {
+    var app = getApp();
+    var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
+    wx.cloud.callFunction({
+      name: 'remove_error_ques',
+      data: {
+        question_id:currentQuesId
+      },
+      success: res => {
+        wx.showToast({
+          title: '成功',
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          title: '失败',
+        })
+      }
+    })
+
+    app.globalData.currentIndex++;
+    this.setData({
+      currentIndex:app.globalData.currentIndex
+    })
+    this.getDataFromApi();
   }
 
 })

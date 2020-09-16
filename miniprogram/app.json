@@ -43,5 +43,8 @@
       }
     ]
   },
-  "sitemapLocation": "sitemap72.json"
+  "sitemapLocation": "sitemap72.json",
+  "useExtendedLib":{
+    "weui":true
+  }
 }
