@@ -37,13 +37,13 @@
 
     <radio-group class="radio-group" bindchange="radioChange" mode="widthFix">
       <label class="radio" wx:for="{{singleItems}}">
-          <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+          <radio value="{{item.name}}" checked="{{item.checked}}" disabled="{{check_disabled}}"/>{{item.value}}
       </label>
   </radio-group>
 
-  <checkbox-group class="checkbox-group" bindchange="checkboxChange" mode="widthFix">
+  <checkbox-group class="checkbox-group" bindchange="checkboxChange" mode="widthFix" disabled="{{check_disabled}}">
       <label style="display: block; margin-bottom: 10px;" wx:for-items="{{mutliItems}}">
-        <checkbox value="{{item.name}}" checked="{{item.checked}}" />{{item.value}}
+        <checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{check_disabled}}" />{{item.value}}
       </label>
     </checkbox-group>
 
@@ -56,7 +56,8 @@
 
   <view class="options" mode="widthFix">
     <!-- <button class="submitAnswer" bindtap="submitAnswer">{{buttonText}}</button> -->
-    <button class="submitAnswer" bindtap="submitAnswer">{{buttonText}}</button>
+    <button class="submitAnswer" bindtap="submitAnswer" wx:if="{{button_show}}">{{buttonText}}</button>
+    <button class="submitAnswer" bindtap="readResult" wx:if="{{!button_show}}">查看解析</button>
   </view>
 
   <view class="analysisView" wx:if="{{area_show}}">{{analysis}}</view>

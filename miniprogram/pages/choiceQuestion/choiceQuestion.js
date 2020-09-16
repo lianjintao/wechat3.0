@@ -6,6 +6,12 @@ Page({
    */
   data: {
 
+    show: false,
+    area_show: false,
+    analysis_show: false,
+    button_show : true,
+    check_disabled:false,
+
     animationData: {}, //内容动画
     animationMask: {}, //蒙板动画
     id:0,
@@ -42,6 +48,24 @@ Page({
     currentIndex:1
   },
 
+  buttontap(e) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    var app = getApp();
+    app.globalData.currentIndex++;
+    this.getDataFromApi();
+    
+  },
+
+  close: function() {
+    this.setData({
+      show: false,
+      button_show: false,
+      check_disabled: true
+    })
+  },
+
   getDataFromApi: function() {
     var app = getApp();
     var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
@@ -58,8 +82,18 @@ Page({
           type:res.result.type,
           title:res.result.title,
           options:res.result.options, 
-          answer:res.result.ans,
+          answer: res.result.ans,
+          analysis: res.result.analysis,
+          button_show: true,
+          check_disabled:false
         })
+        if (this.data.id == 0 || this.data.id == 2) {
+          data_dict['buttonText'] = "提交答案"
+        } else if (this.data.id == 1){
+          data_dict['buttonText'] = "下一题"
+        } else if (this.data.id == 3) {
+          data_dict['buttonText'] = "解析"
+        }
 
         console.log(this.data.id);
         console.log(res.result.analysis);
@@ -211,6 +245,9 @@ Page({
   },
 
   onLoad: function(options) {  //弹窗动画
+    wx.showLoading({
+      title: '加载中',
+    })
     this.animateTrans = wx.createAnimation({
       duration: 600,
       timingFunction: 'ease',
@@ -300,15 +337,6 @@ Page({
         fail: err => {
         }
       })
-      /**
-       * 下一题
-       */
-      var app = getApp();
-      app.globalData.currentIndex++;
-      this.setData({
-        currentIndex:app.globalData.currentIndex
-      })
-      this.getDataFromApi();
 
     } else if (this.data.id == 1) {
       /**
@@ -356,6 +384,12 @@ Page({
       this.getDataFromApi();
     } else if (this.data.id == 2) { //错题
     }
+  },
+
+  readResult: function(){
+    this.setData({
+      show: true
+    })
   },
 
   ans_transfer: function (ans){
