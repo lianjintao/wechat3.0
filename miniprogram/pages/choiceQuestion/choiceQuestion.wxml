@@ -32,6 +32,9 @@
     <view class="typeView" mode="widthFix">{{typeStr}}</view>
     <view class="diffView" mode="widthFix">{{difficultyStr}}</view>
     <image class="delete_icon" mode="widthFix" bindtap="onClinkDelete" src="../../images/delete.png" style="opacity:{{deleteAlpha}}"></image>
+    <text class="daojishi" mode="widthFix" style="color: #f60;">
+    {{clock}}
+    </text>
   </view>
     <view class="questionTitle">{{title}}</view>
 

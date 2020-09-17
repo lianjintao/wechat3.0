@@ -1,11 +1,50 @@
 // miniprogram/pages/choiceQuestion/choiceQuestion.js
+
+var total_micro_second = 2.5 * 60 * 60 * 1000;
+
+function count_down(that) {
+  // 渲染倒计时时钟
+  that.setData({
+    clock: date_format(total_micro_second)
+  });
+
+  if (total_micro_second <= 0) {
+    that.setData({
+      clock: "已经截止"
+    });
+    // timeout则跳出递归
+    return;
+  }
+  setTimeout(function () {
+    // 放在最后--
+    total_micro_second -= 10;
+    count_down(that);
+  }, 10)
+}
+
+function date_format(micro_second) {
+  // 秒数
+  var second = Math.floor(micro_second / 1000);
+  // 小时位
+  var hr = Math.floor(second / 3600);
+  // 分钟位
+  var min = fill_zero_prefix(Math.floor((second - hr * 3600) / 60));
+  // 秒位
+  var sec = fill_zero_prefix((second - hr * 3600 - min * 60));// equal to => var sec = second % 60;
+
+  return hr + ":" + min + ":" + sec + " ";
+}
+
+function fill_zero_prefix(num) {
+  return num < 10 ? "0" + num : num
+}
+
 Page({
  
   /**
    * 页面的初始数据
    */
   data: {
-
     show: false,
     area_show: false,
     analysis_show: false,
@@ -45,7 +84,8 @@ Page({
     chooseAnswerList:[],
     chooseAnswerStr:'',
     datiResult:'',
-    currentIndex:1
+    currentIndex:1,
+    clock: ''
   },
 
   buttontap(e) {
@@ -87,13 +127,13 @@ Page({
           button_show: true,
           check_disabled:false
         })
-        if (this.data.id == 0 || this.data.id == 2) {
-          data_dict['buttonText'] = "提交答案"
-        } else if (this.data.id == 1){
-          data_dict['buttonText'] = "下一题"
-        } else if (this.data.id == 3) {
-          data_dict['buttonText'] = "解析"
-        }
+        // if (this.data.id == 0 || this.data.id == 2) {
+        //   data_dict['buttonText'] = "提交答案"
+        // } else if (this.data.id == 1){
+        //   data_dict['buttonText'] = "下一题"
+        // } else if (this.data.id == 3) {
+        //   data_dict['buttonText'] = "解析"
+        // }
 
         console.log(this.data.id);
         console.log(res.result.analysis);
@@ -261,6 +301,9 @@ Page({
     this.setData({
       id:options.id
     })
+    if (options.id == 1) {
+      count_down(this);
+    }
 
     var alpha = 0;
     if (this.data.id == 2) {
