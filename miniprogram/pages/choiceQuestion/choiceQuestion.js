@@ -1,4 +1,45 @@
 // miniprogram/pages/choiceQuestion/choiceQuestion.js
+var total_micro_second = 2.5 * 60 * 60 * 1000;
+
+function count_down(that) {
+  // 渲染倒计时时钟
+  that.setData({
+    clock: date_format(total_micro_second)
+  });
+
+  if (total_micro_second <= 0) {
+    that.setData({
+      clock: "已经截止",
+      //自动交卷
+      
+    });
+    // timeout则跳出递归
+    return;
+  }
+  setTimeout(function () {
+    // 放在最后--
+    total_micro_second -= 10;
+    count_down(that);
+  }, 10)
+}
+
+function date_format(micro_second) {
+  // 秒数
+  var second = Math.floor(micro_second / 1000);
+  // 小时位
+  var hr = Math.floor(second / 3600);
+  // 分钟位
+  var min = fill_zero_prefix(Math.floor((second - hr * 3600) / 60));
+  // 秒位
+  var sec = fill_zero_prefix((second - hr * 3600 - min * 60));// equal to => var sec = second % 60;
+
+  return hr + ":" + min + ":" + sec + " ";
+}
+
+function fill_zero_prefix(num) {
+  return num < 10 ? "0" + num : num
+}
+
 Page({
  
   /**
@@ -20,6 +61,15 @@ Page({
     animationData: {}, //内容动画
     animationMask: {}, //蒙板动画
     id:0,
+
+    /**
+     * id代表从什么来到的答题界面
+     * 0代表顺序练习
+     * 1代表模拟练习和分类练习
+     * 2代表错题练习
+     * 3代表模拟练习和分类练习提交之后的查看
+     */
+
     buttonText:'',
 
     title:'',
@@ -289,6 +339,24 @@ Page({
       id:options.id,
     })
 
+    if (options.id == 1) {
+      count_down(this);
+    }
+
+    if (options.id == 3) {
+      this.setData({
+        area_show:true
+      })
+    }
+    var alpha = 0;
+    if (this.data.id == 2) {
+      alpha = 1;
+    }
+
+    this.setData({
+      deleteAlpha:alpha
+    })
+
     
     this.getDataFromApi();//得到数据
   },
@@ -305,10 +373,6 @@ Page({
     // })
   },
 
-  submit: function(){
-    
-  },
-
   submitAnswer: function() {
 
     if (this.data.id == 3) {
@@ -319,7 +383,7 @@ Page({
 
     var app = getApp();
 
-    if (this.data.id == 0) {
+    if (this.data.id == 0 || this.data.id == 2) {
       /**提交答案**/
       var app = getApp();
       var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
@@ -350,7 +414,7 @@ Page({
         }
       })
 
-    } else if (this.data.id == 1 || this.data.id == 2) {
+    } else if (this.data.id == 1) {
       /**
        * 文案：下一题
        * 更新答案：update_user_answer
@@ -476,6 +540,33 @@ Page({
 
     e.detail.value = '';
   },
+
+  onClinkDelete: function() {
+    var app = getApp();
+    var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
+    wx.cloud.callFunction({
+      name: 'remove_error_ques',
+      data: {
+        question_id:currentQuesId
+      },
+      success: res => {
+        wx.showToast({
+          title: '成功',
+        })
+      },
+      fail: err => {
+        wx.showToast({
+          title: '失败',
+        })
+      }
+    })
+
+    app.globalData.currentIndex++;
+    this.setData({
+      currentIndex:app.globalData.currentIndex
+    })
+    this.getDataFromApi();
+  }
 
 
 })

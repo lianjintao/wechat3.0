@@ -72,6 +72,12 @@
     transform: translateY(100%);
   }
 
+  .currentIndex {
+    position: absolute;
+    left: 10px;
+    background-color: #00bfff;
+    width: fit-content;
+  }
 
   .tabView {
     position: relative;
@@ -95,6 +101,18 @@
     position: absolute;
     right:5px;
     background-color: #00bfff;
+    width: fit-content;
+  }
+
+  .delete_icon {
+    position: absolute;
+    right:20px;
+    width: 20px;
+  }
+
+  .daojishi {
+    position: absolute;
+    right:20px;
     width: fit-content;
   }
 
