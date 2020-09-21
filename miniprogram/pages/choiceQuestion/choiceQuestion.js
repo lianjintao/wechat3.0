@@ -169,7 +169,7 @@ Page({
         if(this.data.id == 3){
           user_ans = this.data.answer
         }
-        else if(this.data.id == 1||this.data.ia == 2){ //需要修改！！！！！！！！！！！！！！！
+        else if(this.data.id == 1||this.data.ia == 2){ //需要修改！！！！！！！！！！！！！！！!!!!
           user_ans = this.data.chooseAnswerStr
         }
 
