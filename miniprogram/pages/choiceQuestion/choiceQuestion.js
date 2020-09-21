@@ -181,6 +181,7 @@ Page({
           button_show: true,
           check_disabled:false
         }
+        console.log(this.data.answer);
         if (this.data.id == 0 || this.data.id == 2) {
           data_dict['buttonText'] = "提交答案"
         } else if (this.data.id == 1){
@@ -223,20 +224,27 @@ Page({
           user_ans = this.data.chooseAnswerStr
         }
 
-        if (this.data.type == 1) {
-          if (user_ans == 'A') {
+        console.log(data_dict['answer']);
+        console.log(this.data.type);
+        console.log(this.data.id);
+        if (data_dict['type'] == 1 && this.data.id == 3) {
+          if (data_dict['answer'] == 'A') {
+            console.log('我是A');
             optionA.checked=true;
-          } else if (user_ans == 'B') {
+          } else if (data_dict['answer'] == 'B') {
+            console.log('我是B');
             optionB.checked=true;
-          } else if (user_ans == 'C') {
+          } else if (data_dict['answer'] == 'C') {
+            console.log('我是C');
             optionC.checked=true;
-          } else if (user_ans == 'D') {
+          } else if (data_dict['answer'] == 'D') {
+            console.log('我是D');
             optionD.checked=true;
           }
         }
 
-        if ((this.data.type == 2 || this.data.type == 3) && user_ans!=null) {
-          var ansArray = this.transferToArray(user_ans);
+        if ((data_dict['type'] == 2 || data_dict['type'] == 3) && data_dict['answer']!=null && this.data.id == 3) {
+          var ansArray = this.transferToArray(data_dict['answer']);
           console.log(ansArray);
           for (let index = 0; index < ansArray.length; index++) {
             console.log(typeof(ansArray))
@@ -259,6 +267,7 @@ Page({
         itemss.push(optionB);
         itemss.push(optionC);
         itemss.push(optionD);
+        console.log('打印选项信息');
         console.log(itemss);
 
         var type = res.result.type;

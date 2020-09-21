@@ -11,9 +11,11 @@
 }
 
 .tixi_button {
-  width: 120px;
+  width: 150px;
   height: 44px;
-  background-color: grey;
+  border: 2px solid #70bcf6; 
+  border-radius: 2px;  
+  background-color: white;
   position: absolute;
   left: 100px;
   top: 39px;
@@ -27,9 +29,11 @@
 }
 
 .tishu_button {
-  width: 120px;
+  width: 150px;
   height: 44px;
-  background-color: grey;
+  border: 2px solid #70bcf6; 
+  border-radius: 2px;  
+  background-color: white;
   position: absolute;
   left: 100px;
   top: 89px;
@@ -43,9 +47,11 @@
 }
 
 .nandu_button {
-  width: 120px;
+  width: 150px;
   height: 44px;
-  background-color: grey;
+  border: 2px solid #70bcf6; 
+  border-radius: 2px;  
+  background-color: white;
   position: absolute;
   left: 100px;
   top: 139px;
@@ -59,9 +65,11 @@
 }
 
 .classify_button {
-  width: 120px;
+  width: 150px;
   height: 44px;
-  background-color: grey;
+  border: 2px solid #70bcf6; 
+  border-radius: 2px;  
+  background-color: white;
   position: absolute;
   left: 100px;
   top: 189px;
@@ -70,7 +78,9 @@
 .startDati {
   width: 120px;
   height: 44px;
-  background-color: grey;
+  border: 1px solid #70bcf6; 
+  border-radius: 2px;  
+  background-color: white;
   position: absolute;
   bottom: 100px;
   left: 100px;
