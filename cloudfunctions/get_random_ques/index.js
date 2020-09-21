@@ -62,9 +62,9 @@ exports.main = async (event) => {
       is_choice: is_choice,
       ques_lst:ques_lst,
       ques_num: ques_lst.length,
-      done_num:null,
-      correct_num:null,
-      score:null,
+      done_num:-1,
+      correct_num:-1,
+      score:-1,
       during_time:"",
       created_time:time
     }

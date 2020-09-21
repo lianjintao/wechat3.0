@@ -7,7 +7,6 @@
 .questionTitle {
   padding: 15px;
   padding-top: 25px;
-  margin-top: 30px;
 }
 
   .answer_bar {
@@ -79,36 +78,23 @@
     width: 100%;
   }
 
-  .currentIndex {
+  .typeView {
     position: absolute;
     left: 10px;
     background-color: #00bfff;
     width: fit-content;
   }
 
-  .typeView {
-    position: absolute;
-    left: 30px;
-    background-color: #00bfff;
-    width: fit-content;
-  }
-
   .diffView {
     position: absolute;
-    left:90px;
+    left:70px;
     background-color: #00bfff;
     width: fit-content;
   }
-
-  .delete_icon {
+  .btnView{
     position: absolute;
-    right:20px;
-    width: 20px;
-  }
-
-  .daojishi {
-    position: absolute;
-    right:20px;
+    right:5px;
+    background-color: #00bfff;
     width: fit-content;
   }
 
@@ -139,4 +125,12 @@
 
   .checkbox-group {
     width: 100%;
+  }
+
+  .flex-wrap{
+    display:flex;
+    flex-direction: row;
+    background-color: #FFFFFF;
+    flex-wrap: wrap;
+    justify-content: flex-start
   }

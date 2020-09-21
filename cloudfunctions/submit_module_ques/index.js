@@ -18,7 +18,6 @@ exports.main = async (event) => {
 
   const during_time = event.during_time
   var time = new Date()
-  
   time.setTime(time.getTime())
   console.log(module_id)
   // 获得modeule初始化时的数据
@@ -62,7 +61,7 @@ exports.main = async (event) => {
     var result_dict = res.dict
     var correct_count = res.correct_count
     var done_count = res.done_count
-    var score = 1.5*correct_count
+    var score = 100*correct_count/ques_lst.length
     var ans_lst = res.ans_lst
     var user_ans_lst = res.user_ans_lst
     console.log(result_dict)
@@ -134,8 +133,9 @@ exports.main = async (event) => {
 
 
   try {
+    console.log(score)
     await db.collection("module_history").where({
-      module_id: module_id
+      _id: module_id
     })
     .update({
       data: {
@@ -190,7 +190,7 @@ exports.main = async (event) => {
       }
       else{
         result_dict.set(item, false)
-        if(user_dict.get(item) != ""){
+        if(user_dict.get(item) != null){
           done_count += 1
         }
         

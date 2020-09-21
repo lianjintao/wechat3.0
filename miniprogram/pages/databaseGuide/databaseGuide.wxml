@@ -7,7 +7,7 @@
 
 <view class="view_tupian_wenzi" bindtap="click" id="{{index}}">
 
-  <image class="image_1" src="../../images/delete.png" />
+  <image class="image_1" src="../images/main_geren.png" />
   
   <!-- 包裹两行文字 -->
   <view class="view_wenzi2">

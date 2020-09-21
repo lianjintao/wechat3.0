@@ -13,9 +13,12 @@ exports.main = async (event) => {
   if(typeof(union_id)=="undefined"){
     union_id = "123"
   }
+  console.log(union_id)
 
+  const _ = db.command
   const module_res = await db.collection("module_history").where({
     union_id:union_id,
+    score: _.neq(-1)
   }).field({
     _id:true,
     ques_num:true,
@@ -33,7 +36,7 @@ exports.main = async (event) => {
     module_id_lst.push(data[i]._id)
     ques_num_lst.push(data[i].ques_num)
     score_lst.push(data[i].score)
-    time_lst.push(data[i].created_time)
+    time_lst.push(data[i].created_time.toLocaleString())
   }
 
 

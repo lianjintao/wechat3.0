@@ -65,7 +65,7 @@ exports.main = async (event) => {
   }
   else{
     // 生成主观题试卷
-    const ques_num = 7
+    const ques_num = 5
     random_res = await db.collection("parent_ques")
     .aggregate()
     .match({
@@ -94,9 +94,9 @@ exports.main = async (event) => {
       is_choice: is_choice,
       ques_lst:ques_lst,
       ques_num: ques_lst.length,
-      done_num:null,
-      correct_num:null,
-      score:null,
+      done_num:-1,
+      correct_num:-1,
+      score:-1,
       during_time:"",
       created_time:time
     }

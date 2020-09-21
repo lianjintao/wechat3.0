@@ -9,10 +9,10 @@ exports.main = async (event) => {
   // 输入： question_id、module_id
   // 输出： ans
   const db = cloud.database()
+  console.log(event)
   const ans_res = await db.collection("user_answers").where({
     question_id: event.question_id,
-    module_id: event.module_id,
-    is_finish: false
+    module_id: event.module_id
   }).get()
 
   console.log(ans_res)

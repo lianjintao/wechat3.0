@@ -36,7 +36,7 @@
         "selectedIconPath": "images/code-cloud-callback-config.png"
       },
       {
-        "text": "历史",
+        "text": "我的",
         "pagePath": "pages/databaseGuide/databaseGuide",
         "iconPath": "images/me.png",
         "selectedIconPath": "images/code-cloud-callback-config.png"
