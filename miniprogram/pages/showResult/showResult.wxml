@@ -1,8 +1,8 @@
 <!--miniprogram/pages/showResult/showResult.wxml-->
 <view class="container">
 
-<view>得分</view>
-<view>100分，很棒，继续保持</view>
+<view>得分:{{score}}</view>
+<view>很棒，继续保持</view>
 
 <block wx:for="{{list}}" wx:key="index">
 
@@ -15,10 +15,7 @@
   <text class="text_small">{{item.id}}</text>
 
   <view class="ans_view" mode="widthFix">
-  <view class="your_ans_text" mode="widthFix">你的答案</view>
-  <view class="your_ans" mode="widthFix">A</view>
-  <view class="ans_text" mode="widthFix">正确答案</view>
-  <view class="ans" mode="widthFix">B</view>
+  <view class="ans" mode="widthFix">你的答案:{{item.userAns}}   正确答案:{{item.ans}}</view>
   </view>
   
   <text>{{item.result}}</text>

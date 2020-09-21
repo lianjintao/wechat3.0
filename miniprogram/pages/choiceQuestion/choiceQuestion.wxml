@@ -1,9 +1,5 @@
 <!--miniprogram/pages/choiceQuestion/choiceQuestion.wxml-->
 
-<view class="modals">
-    <view class="bottom-pos" animation="{{animationData}}">布局内容</view>
-</view>
-
 <view class="quesFade" wx:if="{{ques_lst_show}}">
   <view class="weui-mask"  bindtap="ques_lst_close"></view>
   <view class="weui-half-screen-dialog">

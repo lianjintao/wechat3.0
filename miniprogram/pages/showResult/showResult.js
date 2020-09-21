@@ -3,7 +3,8 @@ const app = getApp()
 
 Page({
   data: {
-    list: []
+    list: [],
+    score:''
   },
 
   onLoad: function() {
@@ -33,18 +34,24 @@ Page({
           var listV = [];
           for (var i=0; i < res.result.result.length;i++) {
             var item = {};
-            item.id = i;
-            item.result = res.result.result[i];
+            var sequ = i + 1;
+            item.id = sequ;
+            if (res.result.result[i] == true) {
+              item.result = '正确';
+            } else {
+              item.result = '错误';
+            }
+            item.ans = res.result.ans_lst[i];
+            item.userAns =res.result.user_ans_lst[i];
             listV.push(item);
           }
-
           this.setData({
-            list:listV
+            list:listV,
+            score:res.result.score
           })
         },
         fail: err => {
         }
       })
   }
-
 })

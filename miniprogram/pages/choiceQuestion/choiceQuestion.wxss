@@ -5,6 +5,7 @@
 }
 
 .questionTitle {
+  margin-top: 10px;
   padding: 15px;
   padding-top: 25px;
 }
@@ -44,7 +45,9 @@
   .submitAnswer {
     position: absolute;
     width: 100%;
-    background-color: indianred;
+    border: 2px solid #70bcf6; 
+  border-radius: 2px;  
+  background-color: white;
     text-align: center;
   }
 
@@ -87,20 +90,22 @@
   .typeView {
     position: absolute;
     left: 10px;
-    background-color: #00bfff;
+    border: 1px solid #70bcf6; 
+    background-color: white;
     width: fit-content;
   }
 
   .diffView {
     position: absolute;
     left:70px;
-    background-color: #00bfff;
+    border: 1px solid #70bcf6; 
+    background-color: white;
     width: fit-content;
   }
+
   .btnView{
     position: absolute;
     right:5px;
-    background-color: #00bfff;
     width: fit-content;
   }
 
@@ -112,17 +117,18 @@
 
   .daojishi {
     position: absolute;
-    right:20px;
-    width: fit-content;
+    left: 120px;
+    top: -25px;
+    width: 50px;
+    height: 27px;
   }
 
   .radio-group {
-    width: 100%;
+    width: 95%;
   }
 
   .radio {
     display: list-item;
-    margin: 10px;
   }
 
   .contentView{
@@ -135,6 +141,10 @@
   }
   .textarea_bg{
     padding: 0 25rpx;
+    margin: 5px;
+    border: 2px solid #70bcf6; 
+    border-radius: 2px;  
+    background-color: white;
   }
   textarea{
     width: 700rpx;
@@ -142,7 +152,8 @@
   } 
 
   .checkbox-group {
-    width: 100%;
+    width: 90%;
+    padding : 20px;
   }
 
   .flex-wrap{

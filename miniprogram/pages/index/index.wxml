@@ -4,12 +4,10 @@
 <button class="xitilianxi_button" bindtap="onClickXitilianxi" mode="widthFix"></button>
 <image class="xitilianxi_icon" bindtap="onClickXitilianxi" mode="widthFix" src="../../images/xitilianxi.png"></image>
 <view class="xitilianxi_title" bindtap="onClickXitilianxi">顺序练习</view>
-/**无脑循环、一道一道给答案，不用跳题**/
 
 <button class="monilianxi_button" bindtap="onClickMonilianxi" mode="widthFix">.</button>
 <image class="monilianxi_icon" bindtap="onClickMonilianxi" mode="widthFix" src="../../images/monilianxi.png"></image>
 <view class="monilianxi_title" bindtap="onClickMonilianxi">模拟练习</view>
-/**主观题和客观题**/
 
 <button class="cuotiben_button" bindtap="onClickCuotoben" mode="widthFix">.</button>
 <image class="cuotiben_icon" bindtap="onClickCuotoben" mode="widthFix" src="../../images/cuotiben.png"></image>
@@ -18,6 +16,5 @@
 <button class="nanti_button" bindtap="onClickNanti" mode="widthFix">.</button>
 <image class="nanti_icon" bindtap="onClickNanti" mode="widthFix" src="../../images/nanti.png"></image>
 <view class="nanti_title" bindtap="onClickNanti">分类练习</view> 
-//难度、题型、分类、题数、一套做完给答案
 
 </view>

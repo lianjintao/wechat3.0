@@ -2,7 +2,9 @@
 
 .choiceButton {
   margin-top: 30px;
-  background-color: indianred;
+  border: 2px solid #70bcf6; 
+  border-radius: 2px;  
+  background-color: white;
 }
 
 .choiceText {
@@ -11,7 +13,9 @@
 }
 
 .answerQuestionButton {
-  background-color: indianred;
+  border: 2px solid #70bcf6; 
+  border-radius: 2px;  
+  background-color: white;
   margin-top: 50px;
 }
 
