@@ -10,7 +10,9 @@ function count_down(that) {
 
   if (total_micro_second <= 0) {
     that.setData({
-      clock: "已经截止"
+      clock: "已经截止",
+      //自动交卷
+      
     });
     // timeout则跳出递归
     return;
@@ -305,6 +307,12 @@ Page({
       count_down(this);
     }
 
+    if (options.id == 3) {
+      this.setData({
+        area_show:true
+      })
+    }
+
     var alpha = 0;
     if (this.data.id == 2) {
       alpha = 1;
@@ -351,7 +359,7 @@ Page({
     var app = getApp();
     if (app.globalData.currentIndex == app.globalData.quesIdArray.length - 1) { //做到最后一题就得提交试卷和一套题了
       wx.navigateTo({
-        url: '../showResult/showResult',
+        url: '../showResult/showResult?id=1',
       })
       return;
     }

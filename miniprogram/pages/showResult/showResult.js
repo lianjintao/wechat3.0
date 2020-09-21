@@ -3,17 +3,23 @@ const app = getApp()
 
 Page({
   data: {
-    list: []
+    list: [],
+    id:0
   },
 
-  onLoad: function() {
+  onLoad: function(options) {
+    this.setData({
+      id:options.id
+    })
     this.getResult();
   },
 
   click: function (e) { 
-    console.log("按了：", e.currentTarget.id);
     var app = getApp();
-    app.globalData.currentIndex = e.currentTarget.id;
+    var index = parseInt(e.currentTarget.id);
+    console.log("按了：", index);
+    console.log(typeof(index));
+    app.globalData.currentIndex = index;
 
     wx.navigateTo({
       url: '../choiceQuestion/choiceQuestion?id=3',
@@ -22,29 +28,42 @@ Page({
 
   getResult: function() {
       var moduleId = app.globalData.module_id;
-      wx.cloud.callFunction({
-        name: 'submit_module_ques',
-        data: {
-          module_id:moduleId,
-          during_time:'123'
-        },
-        success: res => {     //返回的结果
-          console.log(res)
-          var listV = [];
-          for (var i=0; i < res.result.result.length;i++) {
-            var item = {};
-            item.id = i;
-            item.result = res.result.result[i];
-            listV.push(item);
+      if (this.data.id == 1) {
+        wx.cloud.callFunction({
+          name: 'submit_module_ques',
+          data: {
+            module_id:moduleId,
+          },
+          success: res => {     //返回的结果
+            var listV = [];
+            for (var i=0; i < res.result.result.length;i++) {
+              var item = {};
+              item.id = i;
+              item.result = res.result.result[i];
+              listV.push(item);
+            }
+  
+            this.setData({
+              list:listV
+            })
+          },
+          fail: err => {
           }
-
-          this.setData({
-            list:listV
-          })
-        },
-        fail: err => {
-        }
-      })
+        })
+      } else {
+        wx.cloud.callFunction({
+          name: 'get_module_res',
+          data: {
+            module_id:moduleId,
+          },
+          success: res => {     //返回的结果
+            var app = getApp();
+            app.globalData.quesIdArray = res.result.ques_lst;
+          },
+          fail: err => {
+          }
+        })
+      }
   }
 
 })
