@@ -12,49 +12,49 @@ Page({
     list: [{
       id: 1,
       name: '刑法',
-      content: "我是张三，见到大家很高兴。。。",
+      content: "用刑罚同一切反革命和其他刑事犯罪行为作斗争",
       doneCount:'',
       totalCount:''
     },{
       id: 2,
       name: '刑诉',
-      content: "我是李四，可以带大将去玩。。。。",
+      content: "依照法律规定的程序，解决被追诉者刑事责任问题的活动",
       doneCount:'',
       totalCount:''
     },{
         id: 3,
         name: '民法',
-        content: "我是王五，我编码贼好。。。。",
+        content: "审理解决民事案件的活动以及由这种活动所产生的诉讼关系的总和",
         doneCount:'',
         totalCount:''
       },{
         id: 4,
         name: '民诉',
-        content: "我是张三，见到大家很高兴。。。",
+        content: "行政主体在行使行政职权和接受行政法制监督过程中而与行政",
         doneCount:'',
         totalCount:''
       },{
         id: 5,
         name: '行政法',
-        content: "我是李四，可以带大将去玩。。。。",
+        content: "行政主体在行使行政职权和接受行政法制监督过程中而与行政相对",
         doneCount:'',
         totalCount:''
       },{
           id: 6,
           name: '商经法',
-          content: "我是王五，我编码贼好。。。。",
+          content: "调整平等主体之间商事关系的法律规范的总称",
           doneCount:'',
           totalCount:''
         },{
           id: 7,
           name: '三国法',
-          content: "我是张三，见到大家很高兴。。。",
+          content: "《国际bai公法》、《国际私法》、《国际经济法》",
           doneCount:'',
           totalCount:''
         },{
           id: 8,
           name: '理论法学',
-          content: "我是李四，可以带大将去玩。。。。",
+          content: "探讨法学的基础理论、一般理论为主要任务的法学",
           doneCount:'',
           totalCount:''
         }],
