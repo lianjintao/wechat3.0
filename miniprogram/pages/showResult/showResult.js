@@ -32,7 +32,7 @@ Page({
         success: res => {     //返回的结果
           console.log(res)
           var listV = [];
-          for (var i=0; i < res.result.result.length;i++) {
+          for (var i=0; i < res.result.ans_lst.length;i++) {
             var item = {};
             var sequ = i + 1;
             item.id = sequ;

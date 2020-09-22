@@ -1,5 +1,6 @@
 // miniprogram/pages/choiceQuestion/choiceQuestion.js
-var total_micro_second = 2.5 * 60 * 60 * 1000;
+var total_micro_second = 3.0 * 60 * 60 * 1000;
+var isCountDown = false;
 
 function count_down(that) {
   // 渲染倒计时时钟
@@ -10,8 +11,6 @@ function count_down(that) {
   if (total_micro_second <= 0) {
     that.setData({
       clock: "已经截止",
-      //自动交卷
-      
     });
     // timeout则跳出递归
     return;
@@ -163,14 +162,12 @@ Page({
     })
     var app = getApp();
     var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
-    console.log(currentQuesId);
     wx.cloud.callFunction({
       name: 'get_ques_info',
       data: {
         question_id:currentQuesId
       },
       success: res => {
-        console.log(res)
         var data_dict = {
           area_show:false,
           type:res.result.type,
@@ -181,7 +178,6 @@ Page({
           button_show: true,
           check_disabled:false
         }
-        console.log(this.data.answer);
         if (this.data.id == 0 || this.data.id == 2) {
           data_dict['buttonText'] = "提交答案"
         } else if (this.data.id == 1){
@@ -202,7 +198,6 @@ Page({
         var optionA = {};
         optionA.name='A';
         var titleA = res.result.options[0];
-        console.log(res.result.options[0])
         optionA.value= titleA;
 
         var optionB = {};
@@ -224,32 +219,22 @@ Page({
           user_ans = this.data.chooseAnswerStr
         }
 
-        console.log(data_dict['answer']);
-        console.log(this.data.type);
-        console.log(this.data.id);
         if (data_dict['type'] == 1 && this.data.id == 3) {
           if (data_dict['answer'] == 'A') {
-            console.log('我是A');
             optionA.checked=true;
           } else if (data_dict['answer'] == 'B') {
-            console.log('我是B');
             optionB.checked=true;
           } else if (data_dict['answer'] == 'C') {
-            console.log('我是C');
             optionC.checked=true;
           } else if (data_dict['answer'] == 'D') {
-            console.log('我是D');
             optionD.checked=true;
           }
         }
 
         if ((data_dict['type'] == 2 || data_dict['type'] == 3) && data_dict['answer']!=null && this.data.id == 3) {
           var ansArray = this.transferToArray(data_dict['answer']);
-          console.log(ansArray);
           for (let index = 0; index < ansArray.length; index++) {
-            console.log(typeof(ansArray))
             var element = ansArray[index];
-            console.log(element)
             if (element == 'A') {
               optionA.checked=true;
             } else if (element == 'B') {
@@ -267,8 +252,6 @@ Page({
         itemss.push(optionB);
         itemss.push(optionC);
         itemss.push(optionD);
-        console.log('打印选项信息');
-        console.log(itemss);
 
         var type = res.result.type;
         if (type == 1) {
@@ -326,30 +309,30 @@ Page({
   },
 
   checkboxChange: function(e) {
-    console.log('checkbox发生change事件，携带value值为：', e.detail.value)
     this.setData({
       chooseAnswerList : e.detail.value
     })
   },
 
+  onUnload: function() {
+    isCountDown = false;
+    total_micro_second = 0;
+  },
+
   onLoad: function(options) {  //弹窗动画
-    
-    this.animateTrans = wx.createAnimation({
-      duration: 600,
-      timingFunction: 'ease',
-    })
- 
-    this.animateFade = wx.createAnimation({
-      duration: 600,
-      timingFunction: 'ease',
-    })
+    total_micro_second = 2.5 * 60 * 60 * 1000;
+    console.log('我执行了我执行了我执行了我执行了我执行了我执行了我执行了我执行了');
 
     this.setData({
       id:options.id,
     })
 
     if (options.id == 1) {
-      count_down(this);
+      console.log(isCountDown)
+      if (isCountDown == false) {
+        isCountDown = true;
+        count_down(this);
+      }
     }
 
     if (options.id == 3) {
@@ -368,18 +351,6 @@ Page({
 
     
     this.getDataFromApi();//得到数据
-  },
-
-
-  // 隐藏弹窗
-  hideModal: function() {
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    // this.animateTrans.translateY(300).step()
-    // this.animateFade.opacity(0).step()
-    // this.setData({
-    //   animationData: this.animateTrans.export(),
-    //   animationMask: this.animateFade.export()
-    // })
   },
 
   submitAnswer: function() {
@@ -404,8 +375,6 @@ Page({
         this.setData({
           chooseAnswerStr: this.ans_transfer(this.data.chooseAnswerList)
         })
-        console.log(this.data.chooseAnswerStr)
-        console.log(this.data.answer);
         result = this.data.chooseAnswerStr == this.data.answer ? true:false;
       }
       wx.cloud.callFunction({
@@ -440,9 +409,6 @@ Page({
       } else {
         result = this.data.datiResult;
       }
-      console.log(this.data.answer);
-      console.log(this.data.chooseAnswerStr);
-      console.log(result);
 
       wx.cloud.callFunction({
         name: 'update_user_answer',
@@ -503,7 +469,6 @@ Page({
           datiResult: res.result.ans,
           ques_lst_show:false
         })
-        console.log(this.datiResult)
         this.getDataFromApi();
 
       },
@@ -526,12 +491,10 @@ Page({
         res_str += lst[i]
       }
     }
-    console.log(res_str)
     return res_str
   },
 
   transferToArray: function(ansStr) {
-    console.log(ansStr)
     var res_array = [];
     res_array = ansStr.split("")
     return res_array
@@ -541,7 +504,6 @@ Page({
   },
 
   textareaInput2: function (e) {
-    console.log(e.detail.value)
     this.setData({
       datiResult:e.detail.value,
       chooseAnswerStr: e.detail.value

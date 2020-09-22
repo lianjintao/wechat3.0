@@ -57,17 +57,14 @@
   width: 100%;
 }
 
-.your_ans {
-  left: 60px;
-  width: fit-content;
-}
-
-.ans_text {
-  left: 100px;
-  width: fit-content;
-}
-
 .ans {
   left: 140px;
   width: fit-content;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  align-content: center;
 }
