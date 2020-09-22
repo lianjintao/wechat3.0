@@ -2,27 +2,29 @@
 <view class="container">
 
 <view>得分:{{score}}</view>
-<view>很棒，继续保持</view>
 
 <block wx:for="{{list}}" wx:key="index">
 
 <!-- 包裹图片+两行文字 id="{{index}}"是给按下了那个item记录-->
 
-<view class="view_tupian_wenzi" bindtap="click" id="{{index}}">
+  <view class="view_tupian_wenzi" bindtap="click" id="{{index}}" style="background:{{item.result}}" mode="widthFix">
 
-<!-- 包裹两行文字 -->
-<view class="view_wenzi2">
-  <text class="text_small">{{item.id}}</text>
+  <!-- 包裹两行文字 -->
+    <view class="view_wenzi2">
+      <text class="text_small">{{item.id}}</text>
 
-  <view class="ans_view" mode="widthFix">
-  <view class="ans" mode="widthFix">你的答案:{{item.userAns}}   正确答案:{{item.ans}}</view>
+      <view class="ans_view" mode="widthFix">
+        <view class="ans" mode="widthFix">
+          <text>你的答案:{{item.userAns}}</text>
+        </view>
+        <view class="ans">
+          <text>正确答案:{{item.ans}}</text>
+        </view>
+      </view>
+      
+    </view>
+
   </view>
-  
-  <text>{{item.result}}</text>
-  
-</view>
-
-</view>
 
 </block>
 

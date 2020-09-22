@@ -5,6 +5,8 @@ Page({
   data: {
     list: [],
     score:''
+    // color:"#DC143C",
+    // green:"#00FF7F"
   },
 
   onLoad: function() {
@@ -37,10 +39,10 @@ Page({
             var item = {};
             var sequ = i + 1;
             item.id = sequ;
-            if (res.result.result[i] == true) {
-              item.result = '正确';
+            if (res.result.result[i] != true) {
+              item.result = '#FF4040';
             } else {
-              item.result = '错误';
+              item.result = '#00FF7F';
             }
             item.ans = res.result.ans_lst[i];
             item.userAns =res.result.user_ans_lst[i];

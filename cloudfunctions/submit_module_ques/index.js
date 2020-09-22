@@ -204,7 +204,12 @@ exports.main = async (event) => {
     var count = 1
     for(let item of user_dict.keys()){
       ans_lst.push(ans_dict.get(item))
-      user_ans_lst.push(user_dict.get(item))
+      if(user_dict.get(item) == null){
+        user_ans_lst.push("")
+      }
+      else{
+        user_ans_lst.push(user_dict.get(item))
+      }
       if(user_dict.get(item) == ans_dict.get(item)){
         correct_count += 1
         result_dict.set(item, true)
