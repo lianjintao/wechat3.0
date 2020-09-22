@@ -61,7 +61,12 @@ exports.main = async (event) => {
     var result_dict = res.dict
     var correct_count = res.correct_count
     var done_count = res.done_count
-    var score = 100*correct_count/ques_lst.length
+    if(ques_lst.length > 50){
+      var score = res.score
+    }
+    else{
+      var score = 100*correct_count/ques_lst.length
+    }
     var ans_lst = res.ans_lst
     var user_ans_lst = res.user_ans_lst
     console.log(result_dict)
@@ -90,6 +95,19 @@ exports.main = async (event) => {
     var done_count = ques_lst.length
     var score = 0
     var ans_lst = []
+
+    const _ = db.command
+    var ans_res = await db.collection("question_info").where({
+      question_id: _.in(ques_lst)
+    }).field({
+      ans:true,
+    })
+    .get()
+    for(let i = 0;i < ans_res.data.length;i++){
+      ans_lst.push(ans_res.data[i].ans)
+      // console.log(ans_res.data[i].ans)
+    }
+    console.log(ans_lst)
     var user_ans_lst = []
     // 构建插入的dict
     user_history_lst = []
@@ -157,6 +175,7 @@ exports.main = async (event) => {
       result.push(v)
   }
 
+  console.log(ans_lst)
   return {
     result,
     score,
@@ -181,12 +200,20 @@ exports.main = async (event) => {
     var done_count = 0
     var ans_lst = []
     var user_ans_lst = []
+    var score = 0
+    var count = 1
     for(let item of user_dict.keys()){
       ans_lst.push(ans_dict.get(item))
       user_ans_lst.push(user_dict.get(item))
       if(user_dict.get(item) == ans_dict.get(item)){
         correct_count += 1
         result_dict.set(item, true)
+        if(count <= 50){
+          score += 1
+        }
+        else{
+          score += 2
+        }
       }
       else{
         result_dict.set(item, false)
@@ -201,7 +228,8 @@ exports.main = async (event) => {
       correct_count:correct_count,
       done_count:done_count,
       ans_lst:ans_lst,
-      user_ans_lst:user_ans_lst
+      user_ans_lst:user_ans_lst,
+      score:score
     }
   }
 

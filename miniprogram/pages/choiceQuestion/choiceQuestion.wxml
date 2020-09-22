@@ -46,7 +46,7 @@
   <view class="tabView" mode='widthFix'>
     <view class="typeView" mode="widthFix">{{typeStr}}</view>
     <view class="diffView" mode="widthFix">{{difficultyStr}}</view>
-    <image class="delete_icon" mode="widthFix" bindtap="onClinkDelete" src="../../images/delete.png" style="opacity:{{deleteAlpha}}"></image>
+    <image class="delete_icon" mode="widthFix" bindtap="onClinkDelete" src="../../images/delete.png" style="opacity:{{deleteAlpha}}" wx:if="{{delete_show}}"></image>
     <text class="daojishi" mode="widthFix" style="color: #f60;">
     {{clock}}
     </text>
@@ -78,7 +78,7 @@
     <button class="submitAnswer" bindtap="readResult" wx:if="{{!button_show}}">查看解析</button>
   </view>
 
-  <view class="analysisView" wx:if="{{area_show}}">{{analysis}}</view>
+  <view class="analysisView" wx:if="{{ana_show}}">{{analysis}}</view>
   
 </view>
 

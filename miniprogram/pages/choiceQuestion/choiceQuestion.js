@@ -49,11 +49,12 @@ Page({
 
     show: false, //题目解析弹窗列表
     area_show: false, //大题textarea
-    analysis_show: false, 
     button_show : true,
     check_disabled:false,
     ques_lst_show:false, //题目列表弹窗列表
     ques_lst_btn_show:false, //题目列表btn
+    ana_show:false,
+    delete_show:false,
     
     ques_num:0,
     done_lst:[],
@@ -184,16 +185,15 @@ Page({
         console.log(this.data.answer);
         if (this.data.id == 0 || this.data.id == 2) {
           data_dict['buttonText'] = "提交答案"
+          data_dict['delete_show'] = true
         } else if (this.data.id == 1){
           data_dict['buttonText'] = "下一题"
           data_dict['ques_lst_btn_show'] = true
           data_dict['ques_num'] = app.globalData.quesIdArray.length
         } else if (this.data.id == 3) {
           data_dict['buttonText'] = "解析"
-        }
-
-        if (this.data.id == 3) {
-          data_dict['analysis_show'] = true
+          // data_dict['ana_show'] = true
+          data_dict['check_disabled']=true
         }
 
         if(app.globalData.currentIndex == app.globalData.quesIdArray.length - 1) {
@@ -363,7 +363,8 @@ Page({
     }
 
     this.setData({
-      deleteAlpha:alpha
+      deleteAlpha:alpha,
+      chooseAnswerStr:options.ans
     })
 
     
@@ -385,6 +386,9 @@ Page({
   submitAnswer: function() {
 
     if (this.data.id == 3) {
+      this.setData({
+        show : true
+      })
       return;
     }
 

@@ -16,8 +16,9 @@ Page({
     var app = getApp();
     app.globalData.currentIndex = e.currentTarget.id;
 
+    var ans = this.data.list[e.currentTarget.id]['userAns']
     wx.navigateTo({
-      url: '../choiceQuestion/choiceQuestion?id=3',
+      url: '../choiceQuestion/choiceQuestion?id=3&ans='+ans,
     })
   },
 

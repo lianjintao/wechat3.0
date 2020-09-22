@@ -51,7 +51,7 @@ Page({
     requestResult: ''
   },
 
-  onLoad: function() {
+  onShow: function() {
 
     this.getWrongNumber();
     if (!wx.cloud) {
