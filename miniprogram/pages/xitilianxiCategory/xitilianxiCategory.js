@@ -13,48 +13,56 @@ Page({
       id: 1,
       name: '刑法',
       content: "用刑罚同一切反革命和其他刑事犯罪行为作斗争",
+      src:"../../images/xingfa.png",
       doneCount:'',
       totalCount:''
     },{
       id: 2,
       name: '刑诉',
       content: "依照法律规定的程序，解决被追诉者刑事责任问题的活动",
+      src:"../../images/xingsu.png",
       doneCount:'',
       totalCount:''
     },{
         id: 3,
         name: '民法',
         content: "审理解决民事案件的活动以及由这种活动所产生的诉讼关系的总和",
+        src:"../../images/minfa.png",
         doneCount:'',
         totalCount:''
       },{
         id: 4,
         name: '民诉',
         content: "行政主体在行使行政职权和接受行政法制监督过程中而与行政",
+        src:"../../images/minsu.png",
         doneCount:'',
         totalCount:''
       },{
         id: 5,
         name: '行政法',
         content: "行政主体在行使行政职权和接受行政法制监督过程中而与行政相对",
+        src:"../../images/xingzhengfa.png",
         doneCount:'',
         totalCount:''
       },{
           id: 6,
           name: '商经法',
           content: "调整平等主体之间商事关系的法律规范的总称",
+          src:"../../images/shangjingfa.png",
           doneCount:'',
           totalCount:''
         },{
           id: 7,
           name: '三国法',
           content: "《国际bai公法》、《国际私法》、《国际经济法》",
+          src:"../../images/sanguofa.png",
           doneCount:'',
           totalCount:''
         },{
           id: 8,
           name: '理论法学',
           content: "探讨法学的基础理论、一般理论为主要任务的法学",
+          src:"../../images/lilunfa.png",
           doneCount:'',
           totalCount:''
         }],
