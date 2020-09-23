@@ -95,7 +95,22 @@ exports.main = async (event) => {
     var done_count = ques_lst.length
     var score = 0
     var ans_lst = []
-
+    var user_ans_lst = []
+    var ans_res = await db.collection("user_answers").where({
+      module_id: event.module_id
+    }).field({
+      ans:true
+    })
+    .get()
+    for(let i = 0;i < ans_res.data.length;i++){
+      if(ans_res.data[i].ans == null){
+        user_ans_lst.push("")
+      }
+      else{
+        user_ans_lst.push(ans_res.data[i].ans)
+      }
+      
+    }
     const _ = db.command
     var ans_res = await db.collection("question_info").where({
       question_id: _.in(ques_lst)
@@ -108,7 +123,6 @@ exports.main = async (event) => {
       // console.log(ans_res.data[i].ans)
     }
     console.log(ans_lst)
-    var user_ans_lst = []
     // 构建插入的dict
     user_history_lst = []
     for(let i = 0;i < ques_lst.length;i++){

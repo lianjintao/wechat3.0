@@ -320,7 +320,7 @@ Page({
   },
 
   onLoad: function(options) {  //弹窗动画
-    total_micro_second = 2.5 * 60 * 60 * 1000;
+    total_micro_second = 3.0 * 60 * 60 * 1000;
     console.log('我执行了我执行了我执行了我执行了我执行了我执行了我执行了我执行了');
 
     this.setData({
@@ -347,7 +347,8 @@ Page({
 
     this.setData({
       deleteAlpha:alpha,
-      chooseAnswerStr:options.ans
+      chooseAnswerStr:options.ans,
+      datiResult:options.ans
     })
 
     

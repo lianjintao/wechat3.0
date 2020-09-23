@@ -1,6 +1,6 @@
 <!--miniprogram/pages/monichooseGuide/monichooseGuide.wxml-->
 
 <button class="choiceButton" bindtap="choiceButton">选择题卷</button>
-<view class="choiceText">说明:时间：150分钟       100道选择题</view>
+<view class="choiceText">时间：180分钟       100道选择题</view>
 <button class="answerQuestionButton" bindtap="answerQuestionButton">主观题卷</button>
-<view class="answerQuestionText">说明:时间：150分钟       7道大题</view>
+<view class="answerQuestionText">时间：240分钟       7道大题</view>

@@ -16,7 +16,7 @@ Page({
     picker_tishu_index:0,
 
     isShow_nandu: false,
-    listData_nandu:[['⭐️ ☆  ☆  ☆  ☆', '⭐️ ⭐️ ☆  ☆  ☆', '⭐️ ⭐️ ⭐️ ☆  ☆','⭐️ ⭐️ ⭐️ ⭐️ ☆','⭐️ ⭐️ ⭐️ ⭐️ ⭐️']],
+    listData_nandu:[['⭐️☆ ☆ ☆ ☆', '⭐️⭐️☆ ☆ ☆', '⭐️⭐️⭐️☆ ☆','⭐️⭐️⭐️⭐️☆','⭐️⭐️⭐️⭐️⭐️']],
     picker_nandu_data:[],
     picker_nandu_index:0,
 

@@ -11,7 +11,7 @@
       <view class="weui-half-screen-dialog__bd" style="padding-top:3px;height:650rpx;" display="flex">
         <view class="flex-wrap" >
             <view class="weui-flex__item" wx:for="{{ques_num}}" >
-              <button id="{{index}}" class="mini-btn" type="{{done_lst[index]}}" size="mini" bindtap="ques_lst_tap">{{1+index}}
+              <button id="{{index}}" class="mini-btn" type="{{done_lst[index]}}" size="mini" bindtap="ques_lst_tap" plain = "{{true}}">{{1+index}}
               </button>
             </view>
         </view>

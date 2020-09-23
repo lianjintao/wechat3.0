@@ -7,14 +7,14 @@
 
 <!-- 包裹图片+两行文字 id="{{index}}"是给按下了那个item记录-->
 
-  <view class="view_tupian_wenzi" bindtap="click" id="{{index}}" style="background:{{item.result}}" mode="widthFix">
+  <view class="view_tupian_wenzi" bindtap="click" id="{{index}}" style="background:{{item.result}}" mode="widthFix" plain="{{true}}">
 
   <!-- 包裹两行文字 -->
     <view class="view_wenzi2">
       <text class="text_small">{{item.id}}</text>
 
       <view class="ans_view" mode="widthFix">
-        <view class="ans" mode="widthFix">
+        <view class="ans">
           <text>你的答案:{{item.userAns}}</text>
         </view>
         <view class="ans">
