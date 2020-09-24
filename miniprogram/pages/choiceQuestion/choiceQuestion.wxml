@@ -47,7 +47,7 @@
     <view class="typeView" mode="widthFix">{{typeStr}}</view>
     <view class="diffView" mode="widthFix">{{difficultyStr}}</view>
     <image class="delete_icon" mode="widthFix" bindtap="onClinkDelete" src="../../images/delete.png" style="opacity:{{deleteAlpha}}" wx:if="{{delete_show}}"></image>
-    <text class="daojishi" mode="widthFix" style="color: #f60;">
+    <text class="daojishi" mode="widthFix" style="color: #f60;" wx:if="{{timerShow}}">
     {{clock}}
     </text>
     <button class="btnView" size="mini" type="primary" bindtap="showQuesList" wx:if="{{ques_lst_btn_show}}">题目列表</button>
@@ -68,7 +68,7 @@
 
     <view class="contentView" wx:if="{{area_show}}">
       <view class="textarea_bg" style="background:{{datiBackGroundColor}}">
-        <textarea value="{{datiResult}}" bindinput="textareaInput2" style="height: {{line}}" placeholder="{{datiTitle}}" maxlength="-1" />
+        <textarea value="{{datiResult}}" bindinput="textareaInput2" style="height: {{line}}" placeholder="{{datiTitle}}" maxlength="-1" disabled="{{textarea_disable}}"/>
       </view>
     </view> 
 

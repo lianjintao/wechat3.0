@@ -54,6 +54,8 @@ Page({
     ques_lst_btn_show:false, //题目列表btn
     ana_show:false,
     delete_show:false,
+    timerShow:false,
+    textarea_disable: false,
     
     ques_num:0,
     done_lst:[],
@@ -158,9 +160,6 @@ Page({
 
 
   getDataFromApi: function() {
-    wx.showLoading({
-      title: '加载中',
-    })
     var app = getApp();
     var currentQuesId = app.globalData.quesIdArray[app.globalData.currentIndex];
     wx.cloud.callFunction({
@@ -186,10 +185,13 @@ Page({
           data_dict['buttonText'] = "下一题"
           data_dict['ques_lst_btn_show'] = true
           data_dict['ques_num'] = app.globalData.quesIdArray.length
+          if(app.globalData.quesIdArray.length > 20){
+            data_dict['timerShow'] = true
+          }
         } else if (this.data.id == 3) {
           data_dict['buttonText'] = "解析"
-          // data_dict['ana_show'] = true
           data_dict['check_disabled']=true
+          data_dict['textarea_disable'] = true
         }
 
         if(app.globalData.currentIndex == app.globalData.quesIdArray.length - 1) {
@@ -213,26 +215,30 @@ Page({
         optionD.value=res.result.options[3];
         var user_ans = ""
         if(this.data.id == 3){
-          user_ans = this.data.answer
+          user_ans = data_dict['answer']
         }
-        else if(this.data.id == 1||this.data.ia == 2){ //需要修改！！！！！！！！！！！！！！！!!!!
+        else if(this.data.id == 1){ //需要修改！！！！！！！！！！！！！！！!!!!
           user_ans = this.data.chooseAnswerStr
         }
 
-        if (data_dict['type'] == 1 && this.data.id == 3) {
-          if (data_dict['answer'] == 'A') {
+        console.log("?????????")
+        console.log(this.data.chooseAnswerStr)
+
+        if (data_dict['type'] == 1) {
+          
+          if (user_ans == 'A') {
             optionA.checked=true;
-          } else if (data_dict['answer'] == 'B') {
+          } else if (user_ans == 'B') {
             optionB.checked=true;
-          } else if (data_dict['answer'] == 'C') {
+          } else if (user_ans == 'C') {
             optionC.checked=true;
-          } else if (data_dict['answer'] == 'D') {
+          } else if (user_ans == 'D') {
             optionD.checked=true;
           }
         }
 
-        if ((data_dict['type'] == 2 || data_dict['type'] == 3) && data_dict['answer']!=null && this.data.id == 3) {
-          var ansArray = this.transferToArray(data_dict['answer']);
+        if ((data_dict['type'] == 2 || data_dict['type'] == 3) && user_ans!=null) {
+          var ansArray = this.transferToArray(user_ans);
           for (let index = 0; index < ansArray.length; index++) {
             var element = ansArray[index];
             if (element == 'A') {
@@ -290,7 +296,7 @@ Page({
         }
         data_dict['show'] = false
         this.setData(data_dict)
-        wx.hideLoading()
+        // wx.hideLoading()
       },
       fail: err => {
         wx.showToast({
@@ -321,7 +327,6 @@ Page({
 
   onLoad: function(options) {  //弹窗动画
     total_micro_second = 3.0 * 60 * 60 * 1000;
-    console.log('我执行了我执行了我执行了我执行了我执行了我执行了我执行了我执行了');
 
     this.setData({
       id:options.id,
@@ -474,6 +479,7 @@ Page({
           datiResult: res.result.ans,
           ques_lst_show:false
         })
+        console.log(res.result.ans)
         this.getDataFromApi();
 
       },
@@ -542,6 +548,12 @@ Page({
       currentIndex:app.globalData.currentIndex
     })
     this.getDataFromApi();
+  },
+
+  testfunc:function(){
+    wx.request({
+      url: 'url',
+    })
   }
 
 

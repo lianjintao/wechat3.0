@@ -13,6 +13,10 @@ exports.main = async (event) => {
     union_id = "123"
   }
   
+  if(event.ans == null || event.ans.length == 0){
+    return
+  }
+
   if(event.ans.length>4){
     var ans = event.ans
   }

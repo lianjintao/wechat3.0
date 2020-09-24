@@ -10,6 +10,7 @@ Page({
   },
 
   onLoad: function() {
+    
     this.getResult();
   },
 
@@ -25,6 +26,9 @@ Page({
   },
 
   getResult: function() {
+      wx.showLoading({
+        title: '加载中',
+      })
       var moduleId = app.globalData.module_id;
       wx.cloud.callFunction({
         name: 'submit_module_ques',
@@ -52,6 +56,7 @@ Page({
             list:listV,
             score:res.result.score
           })
+          wx.hideLoading()
         },
         fail: err => {
         }
